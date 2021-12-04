@@ -1,5 +1,7 @@
 # RS School REST service
 
+Don't forget to switch to ```dev``` branch.
+
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
