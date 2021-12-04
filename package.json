@@ -6,7 +6,7 @@
     "url": ""
   },
   "type": "commonjs",
-  "description": "REST service starter for RS School",
+  "description": "REST service",
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server.js",
@@ -15,12 +15,9 @@
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
   },
   "keywords": [
-    "rs",
-    "school",
-    "rest",
-    "node",
-    "autotest",
-    "starter"
+    "nodejs",
+    "fastify",
+    "jest"
   ],
   "license": "ISC",
   "engines": {
@@ -46,6 +43,7 @@
     "cross-env": "7.0.3",
     "dotenv": "10.0.0",
     "fastify": "^3.24.1",
+    "fastify-swagger": "^4.12.6",
     "uuid": "8.3.2",
     "yamljs": "0.3.0"
   },
