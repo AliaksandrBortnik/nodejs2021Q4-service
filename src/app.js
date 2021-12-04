@@ -1,24 +1,19 @@
-const express = require('express');
-const swaggerUI = require('swagger-ui-express');
 const path = require('path');
-const YAML = require('yamljs');
-const userRouter = require('./resources/users/user.router');
 
-const app = express();
-const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
+const app = require("fastify")({ logger: true }); // TODO: remove logger
 
-app.use(express.json());
-
-app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
-app.use('/', (req, res, next) => {
-  if (req.originalUrl === '/') {
-    res.send('Service is running!');
-    return;
+app.register(require('fastify-swagger'), {
+  exposeRoute: true,
+  routePrefix: '/doc',
+  swagger: {
+    info: { title: 'rest-api' }
+  },
+  mode: 'static', // TODO: do I really need it?
+  specification: {  // TODO: do I really need it?
+    path: path.join(__dirname, '../doc/api.yaml')
   }
-  next();
-});
+})
 
-app.use('/users', userRouter);
+app.register(require('./resources/users/user.router'));
 
 module.exports = app;
