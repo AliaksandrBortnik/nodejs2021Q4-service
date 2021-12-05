@@ -81,6 +81,13 @@ const updateOptions = {
     }
   },
   handler: async (req, res) => {
+    const boardExists = !!(await BoardService.getById(req.params.id));
+
+    if (!boardExists) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
     const board = await BoardService.update(req.params.id, req.body);
     res.code(200).send(board);
   }
@@ -99,6 +106,13 @@ const deleteOptions = {
     }
   },
   handler: async (req, res) => {
+    const boardExists = !!(await BoardService.getById(req.params.id));
+
+    if (!boardExists) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
     await BoardService.remove(req.params.id);
     res.code(204);
   }

@@ -68,6 +68,13 @@ const updateOptions = {
     }
   },
   handler: async (req, res) => {
+    const userExists = !!(await UserService.getById(req.params.id));
+
+    if (!userExists) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
     const user = await UserService.update(req.params.id, req.body);
     res.code(200).send(user);
   }
@@ -86,6 +93,13 @@ const deleteOptions = {
     }
   },
   handler: async (req, res) => {
+    const userExists = !!(await UserService.getById(req.params.id));
+
+    if (!userExists) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
     await UserService.remove(req.params.id);
     res.code(204);
   }

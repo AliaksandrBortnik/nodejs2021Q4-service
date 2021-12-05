@@ -80,6 +80,13 @@ const updateOptions = {
     }
   },
   handler: async (req, res) => {
+    const taskExists = !!(await TaskService.getById(req.params.boardId, req.params.taskId));
+
+    if (!taskExists) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
     const task = await TaskService.update(req.params.boardId, req.params.taskId, req.body);
     res.code(200).send(task);
   }
@@ -99,6 +106,13 @@ const deleteOptions = {
     }
   },
   handler: async (req, res) => {
+    const taskExists = !!(await TaskService.getById(req.params.boardId, req.params.taskId));
+
+    if (!taskExists) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
     await TaskService.remove(req.params.boardId, req.params.taskId);
     res.code(204);
   }
