@@ -4,7 +4,7 @@ const Column = {
   type: 'object',
   required: ['title', 'order'],
   properties: {
-    id: { type: 'string' }, // TODO: check if UUID
+    id: { type: 'string', format: 'uuid' },
     title: { type: 'string' },
     order: { type: 'number' }
   }
@@ -14,7 +14,7 @@ const Board = {
   type: 'object',
   required: ['title', 'columns'],
   properties: {
-    id: { type: 'string' }, // TODO: check if UUID
+    id: { type: 'string', format: 'uuid' },
     title: { type: 'string' },
     columns: {
       type: 'array',
@@ -32,7 +32,7 @@ const getAllOptions = {
       }
     }
   },
-  handler: async (req, res) => {
+  handler: async (_, res) => {
     const boards = await BoardService.getAll();
     res.code(200).send(boards);
   }
@@ -41,7 +41,7 @@ const getAllOptions = {
 const getByIdOptions = {
   schema: {
     params: {
-      id: { type: 'string' } // TODO: make sure it is UUID
+      id: { type: 'string', format: 'uuid' }
     },
     response: {
       200: Board
@@ -74,7 +74,7 @@ const addOptions = {
 const updateOptions = {
   schema: {
     params: {
-      id: { type: 'string' } // TODO: make sure it is UUID
+      id: { type: 'string', format: 'uuid' }
     },
     response: {
       200: Board
@@ -89,20 +89,18 @@ const updateOptions = {
 const deleteOptions = {
   schema: {
     params: {
-      id: { type: 'string' } // TODO: make sure it is UUID
+      id: { type: 'string', format: 'uuid' }
     },
     response: {
       204: {
-        type: 'object',  // TODO: how to make empty response? Otherwise, add message in response by DELETE request
-        properties: {
-          message: { type: 'string' }
-        }
+        description: 'Removed',
+        type: 'null'
       }
     }
   },
   handler: async (req, res) => {
     await BoardService.remove(req.params.id);
-    res.code(204);// .send({ message: 'Successfully removed' });
+    res.code(204);
   }
 };
 

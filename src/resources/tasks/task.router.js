@@ -4,20 +4,20 @@ const Task = {
   type: 'object',
   required: ['title', 'order', 'description'],
   properties: {
-    id: { type: 'string' }, // TODO: check if UUID
+    id: { type: 'string', format: 'uuid' },
     title: { type: 'string' },
     order: { type: 'number' },
     description: { type: 'string' },
-    userId: { type: 'string', nullable: true }, // TODO: check if UUID
-    boardId: { type: 'string', nullable: true }, // TODO: check if UUID
-    columnId: { type: 'string', nullable: true } // TODO: check if UUID
+    userId: { type: 'string', nullable: true, format: 'uuid' },
+    boardId: { type: 'string', nullable: true, format: 'uuid' },
+    columnId: { type: 'string', nullable: true, format: 'uuid' }
   }
 }
 
 const getAllOptions = {
   schema: {
     params: {
-      boardId: { type: 'string' } // TODO: make sure it is UUID
+      boardId: { type: 'string', format: 'uuid' }
     },
     response: {
       200: {
@@ -35,8 +35,8 @@ const getAllOptions = {
 const getByIdOptions = {
   schema: {
     params: {
-      boardId: { type: 'string' }, // TODO: make sure it is UUID
-      taskId: { type: 'string' } // TODO: make sure it is UUID
+      boardId: { type: 'string', format: 'uuid' },
+      taskId: { type: 'string', format: 'uuid' }
     },
     response: {
       200: Task
@@ -57,7 +57,7 @@ const getByIdOptions = {
 const addOptions = {
   schema: {
     params: {
-      boardId: { type: 'string' } // TODO: make sure it is UUID
+      boardId: { type: 'string', format: 'uuid' }
     },
     response: {
       201: Task
@@ -72,8 +72,8 @@ const addOptions = {
 const updateOptions = {
   schema: {
     params: {
-      boardId: { type: 'string' }, // TODO: make sure it is UUID
-      taskId: { type: 'string' } // TODO: make sure it is UUID
+      boardId: { type: 'string', format: 'uuid' },
+      taskId: { type: 'string', format: 'uuid' }
     },
     response: {
       200: Task
@@ -88,15 +88,13 @@ const updateOptions = {
 const deleteOptions = {
   schema: {
     params: {
-      boardId: { type: 'string' }, // TODO: make sure it is UUID
-      taskId: { type: 'string' } // TODO: make sure it is UUID
+      boardId: { type: 'string', format: 'uuid' },
+      taskId: { type: 'string', format: 'uuid' }
     },
     response: {
       204: {
-        type: 'object',  // TODO: how to make empty response? Otherwise, add message in response by DELETE request
-        properties: {
-          message: { type: 'string' }
-        }
+        description: 'Removed',
+        type: 'null'
       }
     }
   },

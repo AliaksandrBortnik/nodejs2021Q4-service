@@ -1,13 +1,12 @@
-const UserController = require('./user.controller');
+const UserService = require("./user.service");
 
 const User = {
   type: 'object',
   required: ['name', 'login', 'password'],
   properties: {
-    id: { type: 'string' },
+    id: { type: 'string', format: 'uuid' },
     name: { type: 'string' },
     login: { type: 'string' }
-    // Skipped password
   }
 }
 
@@ -20,19 +19,31 @@ const getAllOptions = {
       }
     }
   },
-  handler: UserController.getAll
+  handler: async (_, res) => {
+    const users = await UserService.getAll();
+    res.code(200).send(users);
+  }
 }
 
 const getByIdOptions = {
   schema: {
     params: {
-      id: { type: 'string' } // TODO: make sure it is UUID
+      id: { type: 'string', format: 'uuid' }
     },
     response: {
       200: User
     }
   },
-  handler: UserController.getById
+  handler: async (req, res) => {
+    const user = await UserService.getById(req.params.id);
+
+    if (!user) {
+      res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
+    res.code(200).send(user);
+  }
 };
 
 const addOptions = {
@@ -41,36 +52,43 @@ const addOptions = {
       201: User
     }
   },
-  handler: UserController.add
+  handler: async (req, res) => {
+    const user = await UserService.add(req.body);
+    res.status(201).send(user);
+  }
 };
 
 const updateOptions = {
   schema: {
     params: {
-      id: { type: 'string' } // TODO: make sure it is UUID
+      id: { type: 'string', format: 'uuid' }
     },
     response: {
       200: User
     }
   },
-  handler: UserController.update
+  handler: async (req, res) => {
+    const user = await UserService.update(req.params.id, req.body);
+    res.code(200).send(user);
+  }
 };
 
 const deleteOptions = {
   schema: {
     params: {
-      id: { type: 'string' } // TODO: make sure it is UUID
+      id: { type: 'string', format: 'uuid' }
     },
     response: {
       204: {
-        type: 'object',  // TODO: how to make empty response? Otherwise, add message in response by DELETE request
-        properties: {
-          message: { type: 'string' }
-        }
+        description: 'Removed',
+        type: 'null'
       }
     }
   },
-  handler: UserController.remove
+  handler: async (req, res) => {
+    await UserService.remove(req.params.id);
+    res.code(204);
+  }
 };
 
 const userRoutes = (router, _, done) => {
