@@ -2,6 +2,7 @@ const UserController = require('./user.controller');
 
 const User = {
   type: 'object',
+  required: ['name', 'login', 'password'],
   properties: {
     id: { type: 'string' },
     name: { type: 'string' },
@@ -72,12 +73,12 @@ const deleteOptions = {
   handler: UserController.remove
 };
 
-const userRoutes = (fastify, options, done) => {
-  fastify.get('/users', getAllOptions);
-  fastify.get('/users/:id', getByIdOptions);
-  fastify.post('/users', addOptions);
-  fastify.put('/users/:id', updateOptions);
-  fastify.delete('/users/:id', deleteOptions);
+const userRoutes = (router, _, done) => {
+  router.get('/users', getAllOptions);
+  router.get('/users/:id', getByIdOptions);
+  router.post('/users', addOptions);
+  router.put('/users/:id', updateOptions);
+  router.delete('/users/:id', deleteOptions);
   done();
 }
 

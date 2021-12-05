@@ -1,19 +1,23 @@
 const path = require('path');
+const fastify = require('fastify');
+const fastifySwagger = require('fastify-swagger');
 
-const app = require("fastify")({ logger: true }); // TODO: remove logger
+const app = fastify({ logger: true });
 
-app.register(require('fastify-swagger'), {
+app.register(require('./resources/users/user.router'));
+app.register(require('./resources/boards/board.router'));
+app.register(require('./resources/tasks/task.router'));
+
+app.register(fastifySwagger, {
   exposeRoute: true,
   routePrefix: '/doc',
   swagger: {
-    info: { title: 'rest-api' }
+    info: { title: 'REST API' }
   },
-  mode: 'static', // TODO: do I really need it?
-  specification: {  // TODO: do I really need it?
-    path: path.join(__dirname, '../doc/api.yaml')
-  }
-})
-
-app.register(require('./resources/users/user.router'));
+  mode: 'static',
+  specification: {
+  path: path.join(__dirname, '../doc/api.yaml')
+}
+});
 
 module.exports = app;

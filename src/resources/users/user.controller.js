@@ -7,6 +7,12 @@ const getAll = async (_, res) => {
 
 const getById = async (req, res) => {
   const user = await UserService.getById(req.params.id);
+
+  if (!user) {
+    res.code(404).send({ message: 'Not Found' });
+    return;
+  }
+
   res.code(200).send(user);
 }
 
@@ -22,7 +28,7 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   await UserService.remove(req.params.id);
-  res.code(204); // TODO: check if need to use empty send()
+  res.code(204);
 }
 
 module.exports = {
