@@ -61,6 +61,17 @@ const getByIdOptions = {
 
 const addOptions = {
   schema: {
+    body: {
+      type: 'object',
+      required: ['title', 'columns'],
+      properties: {
+        title: { type: 'string' },
+        columns: {
+          type: 'array',
+          items: Column
+        }
+      }
+    },
     response: {
       201: Board
     }
@@ -75,6 +86,17 @@ const updateOptions = {
   schema: {
     params: {
       id: { type: 'string', format: 'uuid' }
+    },
+    body: {
+      type: 'object',
+      required: ['title', 'columns'],
+      properties: {
+        title: { type: 'string' },
+        columns: {
+          type: 'array',
+          items: Column
+        }
+      }
     },
     response: {
       200: Board

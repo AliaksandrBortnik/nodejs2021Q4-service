@@ -59,6 +59,18 @@ const addOptions = {
     params: {
       boardId: { type: 'string', format: 'uuid' }
     },
+    body: {
+      type: 'object',
+      required: ['title', 'order', 'description', 'userId', 'boardId'],
+      properties: {
+        title: { type: 'string' },
+        order: { type: 'number' },
+        description: { type: 'string' },
+        userId: { type: 'string', nullable: true, format: 'uuid' },
+        boardId: { type: 'string', nullable: true, format: 'uuid' },
+        columnId: { type: 'string', nullable: true, format: 'uuid' }
+      }
+    },
     response: {
       201: Task
     }
@@ -74,6 +86,18 @@ const updateOptions = {
     params: {
       boardId: { type: 'string', format: 'uuid' },
       taskId: { type: 'string', format: 'uuid' }
+    },
+    body: {
+      type: 'object',
+      required: ['title', 'order', 'description', 'userId', 'boardId', 'columnId'],
+      properties: {
+        title: { type: 'string' },
+        order: { type: 'number' },
+        description: { type: 'string' },
+        userId: { type: 'string', nullable: true, format: 'uuid' },
+        boardId: { type: 'string', nullable: true, format: 'uuid' },
+        columnId: { type: 'string', nullable: true, format: 'uuid' }
+      }
     },
     response: {
       200: Task

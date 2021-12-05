@@ -48,6 +48,15 @@ const getByIdOptions = {
 
 const addOptions = {
   schema: {
+    body: {
+      type: 'object',
+      required: ['name', 'login', 'password'],
+      properties: {
+        name: { type: 'string' },
+        login: { type: 'string' },
+        password: { type: 'string' }
+      }
+    },
     response: {
       201: User
     }
@@ -62,6 +71,15 @@ const updateOptions = {
   schema: {
     params: {
       id: { type: 'string', format: 'uuid' }
+    },
+    body: {
+      type: 'object',
+      required: ['name', 'login', 'password'],
+      properties: {
+        name: { type: 'string' },
+        login: { type: 'string' },
+        password: { type: 'string' }
+      }
     },
     response: {
       200: User
