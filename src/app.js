@@ -16,8 +16,8 @@ app.register(fastifySwagger, {
   },
   mode: 'static',
   specification: {
-  path: path.join(__dirname, '../doc/api.yaml')
-}
+    path: path.join(__dirname, '../doc/api.yaml')
+  }
 });
 
 module.exports = app;
