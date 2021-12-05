@@ -6,9 +6,9 @@ const getAll = async () => db.users;
 const getById = async (id) => db.users.find(u => u.id === id);
 
 const add = async (user) => {
-  const newUser = { id: uuidv4(), ...user };
-  db.users.push(newUser);
-  return newUser;
+  const entity = { id: uuidv4(), ...user };
+  db.users.push(entity);
+  return entity;
 };
 
 const update = async (id, user) => {
