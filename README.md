@@ -1,6 +1,6 @@
 # RS School REST service
 
-Don't forget to switch to ```dev``` branch.
+Don't forget to switch to ```task5-ts``` branch.
 
 ## Downloading
 
