@@ -1,15 +1,28 @@
-const boardRepo = require('./board.repository');
-const taskRepo = require('../tasks/task.repository');
+import boardRepo from './board.repository';
+import taskRepo from '../tasks/task.repository';
+import Board from "resources/boards/board.model";
+import Task from "resources/tasks/task.model";
 
-const getAll = async () => boardRepo.getAll();
-const getById = async (id) => boardRepo.getById(id);
-const add = async (board) => boardRepo.add(board);
-const update = async (id, board) => boardRepo.update(id, board);
+async function getAll(): Promise<Board[]> {
+  return boardRepo.getAll();
+}
 
-const remove = async (id) => {
-  const tasks = await taskRepo.getAll();
-  const boardTasks = tasks.filter(t => t.boardId === id);
-  const tasksRemoveBatch = [];
+async function getById(id: string): Promise<Board | undefined> {
+  return boardRepo.getById(id);
+}
+
+async function add(board: Board): Promise<Board> {
+  return boardRepo.add(board);
+}
+
+async function update(id: string, board: Board): Promise<Board> {
+  return boardRepo.update(id, board);
+}
+
+async function remove(id: string): Promise<void> {
+  const tasks: Task[] = await taskRepo.getAll();
+  const boardTasks: Task[] = tasks.filter(t => t.boardId === id);
+  const tasksRemoveBatch: Promise<void>[] = [];
 
   for (let i = 0; i < boardTasks.length; i += 1) {
     tasksRemoveBatch.push(taskRepo.remove(boardTasks[i].id));
@@ -22,7 +35,7 @@ const remove = async (id) => {
   await boardRepo.remove(id);
 }
 
-module.exports = {
+export default {
   getAll,
   getById,
   add,

@@ -1,4 +1,4 @@
-const Column = {
+const ColumnSchema = {
   type: 'object',
   required: ['title', 'order'],
   properties: {
@@ -6,6 +6,6 @@ const Column = {
     title: { type: 'string' },
     order: { type: 'number' }
   }
-}
+};
 
-module.exports = Column;
+export default ColumnSchema;

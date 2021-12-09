@@ -1,16 +1,29 @@
-const userRepo = require('./user.repository');
-const taskRepo = require('../tasks/task.repository');
+import User from "resources/users/user.model";
+import userRepo from './user.repository';
+import taskRepo from '../tasks/task.repository';
+import Task from "resources/tasks/task.model";
 
-const getAll = async () => userRepo.getAll();
-const getById = async (id) => userRepo.getById(id);
-const add = async (user) => userRepo.add(user);
-const update = async (id, user) => userRepo.update(id, user);
+async function getAll(): Promise<User[]> {
+  return await userRepo.getAll();
+}
 
-const remove = async (id) => {
-  const tasks = await taskRepo.getAll();
-  const userTasks = tasks.filter(t => t.userId === id);
+async function getById(id: string): Promise<User | undefined> {
+  return await userRepo.getById(id);
+}
 
-  const tasksUpdateBatch = [];
+async function add(user: User): Promise<User> {
+  return userRepo.add(user);
+}
+
+async function update(id: string, user: User) {
+  return userRepo.update(id, user);
+}
+
+async function remove(id: string): Promise<void> {
+  const tasks: Task[] = await taskRepo.getAll();
+  const userTasks: Task[] = tasks.filter(t => t.userId === id);
+
+  const tasksUpdateBatch: Promise<Task>[] = [];
 
   for (let i = 0; i < userTasks.length; i += 1) {
     userTasks[i].userId = null;
@@ -24,7 +37,7 @@ const remove = async (id) => {
   await userRepo.remove(id);
 }
 
-module.exports = {
+export default {
   getAll,
   getById,
   add,

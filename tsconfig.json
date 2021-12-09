@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["es2016"],
+    "paths": {
+      "*": ["src/*"]
+    },
+    "allowJs": true,
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "esModuleInterop" : true,
+    "strict": true, // REQUIRED BY TASK
+    "noImplicitAny": true // REQUIRED BY TASK
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

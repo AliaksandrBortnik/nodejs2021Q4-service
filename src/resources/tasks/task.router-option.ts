@@ -1,5 +1,5 @@
-const TaskController = require('./task.controller');
-const Task = require('./task.schema');
+import TaskController from './task.controller';
+import TaskSchema from './task.schema';
 
 const options = {
   getAll: {
@@ -10,7 +10,7 @@ const options = {
       response: {
         200: {
           type: 'array',
-            items: Task
+            items: TaskSchema
         }
       }
     },
@@ -23,7 +23,7 @@ const options = {
         taskId: { type: 'string', format: 'uuid' }
       },
       response: {
-        200: Task
+        200: TaskSchema
       }
     },
     handler: TaskController.getById
@@ -46,7 +46,7 @@ const options = {
         }
       },
       response: {
-        201: Task
+        201: TaskSchema
       }
     },
     handler: TaskController.add
@@ -70,7 +70,7 @@ const options = {
         }
       },
       response: {
-        200: Task
+        200: TaskSchema
       }
     },
     handler: TaskController.update
@@ -92,4 +92,4 @@ const options = {
   }
 }
 
-module.exports = options;
+export default options;

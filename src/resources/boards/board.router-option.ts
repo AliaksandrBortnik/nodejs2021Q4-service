@@ -1,6 +1,6 @@
-const Board = require('./schemas/board.schema');
-const Column = require('./schemas/column.schema');
-const BoardController = require('./board.controller');
+import BoardSchema from './schemas/board.schema';
+import ColumnSchema from './schemas/column.schema';
+import BoardController from './board.controller';
 
 const options = {
   getAll: {
@@ -8,7 +8,7 @@ const options = {
       response: {
         200: {
           type: 'array',
-          items: Board
+          items: BoardSchema
         }
       }
     },
@@ -20,7 +20,7 @@ const options = {
         id: { type: 'string', format: 'uuid' }
       },
       response: {
-        200: Board
+        200: BoardSchema
       }
     },
     handler: BoardController.getById
@@ -34,12 +34,12 @@ const options = {
           title: { type: 'string' },
           columns: {
             type: 'array',
-            items: Column
+            items: ColumnSchema
           }
         }
       },
       response: {
-        201: Board
+        201: BoardSchema
       }
     },
     handler: BoardController.add
@@ -56,12 +56,12 @@ const options = {
           title: { type: 'string' },
           columns: {
             type: 'array',
-            items: Column
+            items: ColumnSchema
           }
         }
       },
       response: {
-        200: Board
+        200: BoardSchema
       }
     },
     handler: BoardController.update
@@ -82,4 +82,4 @@ const options = {
   }
 };
 
-module.exports = options;
+export default options;

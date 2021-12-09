@@ -1,11 +1,18 @@
-const UserService = require("./user.service");
+import {FastifyReply, FastifyRequest } from "fastify";
+import UserService from "./user.service";
+import User from "resources/users/user.model";
 
-async function getAll(_, res) {
+type CustomFastifyRequest = FastifyRequest<{
+  Params: { id: string },
+  Body: User
+}>;
+
+async function getAll(_: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const users = await UserService.getAll();
   res.code(200).send(users);
 }
 
-async function getById(req, res) {
+async function getById(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const user = await UserService.getById(req.params.id);
 
   if (!user) {
@@ -16,12 +23,12 @@ async function getById(req, res) {
   res.code(200).send(user);
 }
 
-async function add(req, res) {
+async function add(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const user = await UserService.add(req.body);
   res.status(201).send(user);
 }
 
-async function update(req, res) {
+async function update(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const userExists = !!(await UserService.getById(req.params.id));
 
   if (!userExists) {
@@ -29,11 +36,11 @@ async function update(req, res) {
     return;
   }
 
-  const user = await UserService.update(req.params.id, req.body);
+  const user: User = await UserService.update(req.params.id, req.body);
   res.code(200).send(user);
 }
 
-async function remove(req, res) {
+async function remove(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const userExists = !!(await UserService.getById(req.params.id));
 
   if (!userExists) {
@@ -45,7 +52,7 @@ async function remove(req, res) {
   res.code(204);
 }
 
-module.exports = {
+export default {
   getAll,
   getById,
   add,

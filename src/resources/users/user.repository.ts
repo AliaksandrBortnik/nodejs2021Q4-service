@@ -1,27 +1,32 @@
-const { v4: uuidv4 } = require('uuid');
-const db = require('../../db');
+import { v4 as uuidv4 } from 'uuid';
+import store from '../../store';
+import User from "./user.model";
 
-const getAll = async () => db.users;
-
-const getById = async (id) => db.users.find(u => u.id === id);
-
-const add = async (user) => {
-  const entity = { id: uuidv4(), ...user };
-  db.users.push(entity);
-  return entity;
-};
-
-const update = async (id, user) => {
-  const index = db.users.findIndex(u => u.id === id);
-  db.users[index] = { id, ...user };
-  return db.users[index];
-};
-
-const remove = async (id) => {
-  db.users = db.users.filter(u => u.id !== id);
+async function getAll(): Promise<User[]> {
+  return store.users;
 }
 
-module.exports = {
+async function getById(id: string): Promise<User | undefined> {
+  return store.users.find(u => u.id === id);
+}
+
+async function add(user: User): Promise<User> {
+  const entity: User = {...user, id: uuidv4()};
+  store.users.push(entity);
+  return entity;
+}
+
+async function update(id: string, user: User): Promise<User> {
+  const index: number = store.users.findIndex(u => u.id === id);
+  store.users[index] = {...user, id};
+  return store.users[index];
+}
+
+async function remove(id: string): Promise<void> {
+  store.users = store.users.filter(u => u.id !== id);
+}
+
+export default {
   getAll,
   getById,
   add,

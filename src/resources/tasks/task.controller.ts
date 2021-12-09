@@ -1,11 +1,21 @@
-const TaskService = require('./task.service');
+import TaskService from './task.service';
+import {FastifyReply, FastifyRequest} from 'fastify';
+import Task from "resources/tasks/task.model";
 
-async function getAll(req, res) {
-  const tasks = await TaskService.getAll(req.params.boardId);
+type CustomFastifyRequest = FastifyRequest<{
+  Params: {
+    boardId: string,
+    taskId: string
+  },
+  Body: Task
+}>;
+
+async function getAll(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
+  const tasks: Task[] = await TaskService.getAll(req.params.boardId);
   res.code(200).send(tasks);
 }
 
-async function getById(req, res) {
+async function getById(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const task = await TaskService.getById(req.params.boardId, req.params.taskId);
 
   if (!task) {
@@ -16,12 +26,12 @@ async function getById(req, res) {
   res.code(200).send(task);
 }
 
-async function add(req, res) {
+async function add(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const task = await TaskService.add(req.params.boardId, req.body);
   res.status(201).send(task);
 }
 
-async function update(req, res) {
+async function update(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const taskExists = !!(await TaskService.getById(req.params.boardId, req.params.taskId));
 
   if (!taskExists) {
@@ -33,7 +43,7 @@ async function update(req, res) {
   res.code(200).send(task);
 }
 
-async function remove(req, res) {
+async function remove(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const taskExists = !!(await TaskService.getById(req.params.boardId, req.params.taskId));
 
   if (!taskExists) {
@@ -45,7 +55,7 @@ async function remove(req, res) {
   res.code(204);
 }
 
-module.exports = {
+export default {
   getAll,
   getById,
   add,

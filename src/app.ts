@@ -1,14 +1,24 @@
-const path = require('path');
-const fastify = require('fastify');
-const fastifySwagger = require('fastify-swagger');
+import path from 'path';
+import fastifySwagger from 'fastify-swagger';
+import {
+  fastify,
+  FastifyInstance,
+  FastifyPluginCallback,
+  FastifyPluginOptions,
+  FastifyRegisterOptions,
+  FastifyServerOptions
+} from 'fastify';
+import userRouter from './resources/users/user.router';
+import boardRouter from './resources/boards/board.router';
+import taskRouter from './resources/tasks/task.router';
 
-const app = fastify({ logger: true });
+const app: FastifyInstance = fastify({ logger: true } as FastifyServerOptions);
 
-app.register(require('./resources/users/user.router'));
-app.register(require('./resources/boards/board.router'));
-app.register(require('./resources/tasks/task.router'));
+app.register(userRouter);
+app.register(boardRouter);
+app.register(taskRouter);
 
-app.register(fastifySwagger, {
+app.register(fastifySwagger as FastifyPluginCallback, <FastifyRegisterOptions<FastifyPluginOptions>>{
   exposeRoute: true,
   routePrefix: '/doc',
   swagger: {
@@ -20,4 +30,4 @@ app.register(fastifySwagger, {
   }
 });
 
-module.exports = app;
+export default app;

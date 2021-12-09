@@ -1,4 +1,4 @@
-const Task = {
+const TaskSchema = {
   type: 'object',
   required: ['title', 'order', 'description'],
   properties: {
@@ -12,4 +12,4 @@ const Task = {
   }
 }
 
-module.exports = Task;
+export default TaskSchema;

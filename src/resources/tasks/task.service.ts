@@ -1,12 +1,27 @@
-const taskRepo = require("./task.repository");
+import taskRepo from "./task.repository";
+import Task from "resources/tasks/task.model";
 
-const getAll = async (boardId) => taskRepo.getAllByBoardId(boardId);
-const getById = async (boardId, id) => taskRepo.getById(id);
-const add = async (boardId, task) => taskRepo.add(boardId, task);
-const update = async (boardId, taskId, task) => taskRepo.update(taskId, task);
-const remove = async (boardId, id) => taskRepo.remove(id);
+async function getAll(boardId: string): Promise<Task[]> {
+  return taskRepo.getAllByBoardId(boardId);
+}
 
-module.exports = {
+async function getById(boardId: string, id: string): Promise<Task | undefined> {
+  return taskRepo.getById(id);
+}
+
+async function add(boardId: string, task: Task): Promise<Task> {
+  return taskRepo.add(boardId, task);
+}
+
+async function update(boardId: string, taskId: string, task: Task): Promise<Task> {
+  return taskRepo.update(taskId, task);
+}
+
+async function remove(boardId: string, id: string): Promise<void> {
+  return taskRepo.remove(id);
+}
+
+export default {
   getAll,
   getById,
   add,

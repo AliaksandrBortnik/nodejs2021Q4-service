@@ -1,12 +1,21 @@
-const BoardService = require('./board.service');
+import BoardService from './board.service';
+import Board from "resources/boards/board.model";
+import {FastifyReply, FastifyRequest} from "fastify";
 
-async function getAll(_, res) {
-  const boards = await BoardService.getAll();
+type CustomFastifyRequest = FastifyRequest<{
+  Params: {
+    id: string
+  },
+  Body: Board
+}>;
+
+async function getAll(_: CustomFastifyRequest, res: FastifyReply): Promise<void> {
+  const boards: Board[] = await BoardService.getAll();
   res.code(200).send(boards);
 }
 
-async function getById(req, res) {
-  const board = await BoardService.getById(req.params.id);
+async function getById(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
+  const board: Board | undefined = await BoardService.getById(req.params.id);
 
   if (!board) {
     res.code(404).send({ message: 'Not Found' });
@@ -16,12 +25,12 @@ async function getById(req, res) {
   res.code(200).send(board);
 }
 
-async function add(req, res) {
-  const board = await BoardService.add(req.body);
+async function add(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
+  const board: Board = await BoardService.add(req.body);
   res.status(201).send(board);
 }
 
-async function update(req, res) {
+async function update(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const boardExists = !!(await BoardService.getById(req.params.id));
 
   if (!boardExists) {
@@ -29,11 +38,11 @@ async function update(req, res) {
     return;
   }
 
-  const board = await BoardService.update(req.params.id, req.body);
+  const board: Board = await BoardService.update(req.params.id, req.body);
   res.code(200).send(board);
 }
 
-async function remove(req, res) {
+async function remove(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
   const boardExists = !!(await BoardService.getById(req.params.id));
 
   if (!boardExists) {
@@ -45,7 +54,7 @@ async function remove(req, res) {
   res.code(204);
 }
 
-module.exports = {
+export default {
   getAll,
   getById,
   add,

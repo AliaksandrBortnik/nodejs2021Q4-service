@@ -1,5 +1,5 @@
-const UserController = require('./user.controller');
-const User = require('./user.schema');
+import UserController from './user.controller';
+import User from './user.schema';
 
 const options = {
   getAll: {
@@ -77,4 +77,4 @@ const options = {
   }
 }
 
-module.exports = options;
+export default options;

@@ -1,4 +1,6 @@
-const app = require('./app');
-const { PORT } = require('./common/config');
+import app from './app';
+import config from './common/config';
 
-app.listen(PORT).catch(error => app.log.error(error.message));
+const PORT: string = config.PORT || '4000';
+
+app.listen(PORT).catch((error: Error) => app.log.error(error.message));

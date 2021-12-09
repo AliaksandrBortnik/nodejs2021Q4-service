@@ -1,6 +1,6 @@
-const Column = require('./column.schema');
+import ColumnSchema from './column.schema';
 
-const Board = {
+const BoardSchema = {
   type: 'object',
   required: ['title', 'columns'],
   properties: {
@@ -8,9 +8,9 @@ const Board = {
     title: { type: 'string' },
     columns: {
       type: 'array',
-      items: Column
+      items: ColumnSchema
     }
   }
-}
+};
 
-module.exports = Board;
+export default BoardSchema;

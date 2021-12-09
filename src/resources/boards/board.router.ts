@@ -1,12 +1,12 @@
-const options = require('./board.router-option');
+import {FastifyInstance, FastifyPluginAsync} from "fastify";
+import options from './board.router-option';
 
-const boardRoutes = (router, _, done) => {
+const boardRoutes: FastifyPluginAsync = async (router: FastifyInstance) => {
   router.get('/boards', options.getAll);
   router.get('/boards/:id', options.getById);
   router.post('/boards', options.add);
   router.put('/boards/:id', options.update);
   router.delete('/boards/:id', options.remove);
-  done();
 }
 
-module.exports = boardRoutes;
+export default boardRoutes;
