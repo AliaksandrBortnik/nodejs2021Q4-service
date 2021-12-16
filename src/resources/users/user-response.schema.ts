@@ -1,6 +1,6 @@
-const User = {
+const UserResponseSchema = {
   type: 'object',
-  required: ['name', 'login', 'password'],
+  required: ['name', 'login'],
   properties: {
     id: { type: 'string', format: 'uuid' },
     name: { type: 'string' },
@@ -8,4 +8,4 @@ const User = {
   }
 };
 
-export default User;
+export default UserResponseSchema;

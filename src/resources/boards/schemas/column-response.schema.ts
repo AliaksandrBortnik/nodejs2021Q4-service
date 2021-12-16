@@ -1,4 +1,4 @@
-const ColumnSchema = {
+const ColumnResponseSchema = {
   type: 'object',
   required: ['title', 'order'],
   properties: {
@@ -8,4 +8,4 @@ const ColumnSchema = {
   }
 };
 
-export default ColumnSchema;
+export default ColumnResponseSchema;

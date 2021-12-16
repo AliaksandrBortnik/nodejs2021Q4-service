@@ -1,6 +1,6 @@
-import ColumnSchema from './column.schema';
+import ColumnResponseSchema from './column-response.schema';
 
-const BoardSchema = {
+const BoardResponseSchema = {
   type: 'object',
   required: ['title', 'columns'],
   properties: {
@@ -8,9 +8,9 @@ const BoardSchema = {
     title: { type: 'string' },
     columns: {
       type: 'array',
-      items: ColumnSchema
+      items: ColumnResponseSchema
     }
   }
 };
 
-export default BoardSchema;
+export default BoardResponseSchema;

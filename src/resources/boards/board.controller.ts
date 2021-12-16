@@ -1,5 +1,5 @@
 import BoardService from './board.service';
-import Board from "resources/boards/board.model";
+import { Board } from "./board.model";
 import {FastifyReply, FastifyRequest} from "fastify";
 
 type CustomFastifyRequest = FastifyRequest<{

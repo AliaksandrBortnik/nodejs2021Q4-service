@@ -1,7 +1,7 @@
-import User from "resources/users/user.model";
+import User from "./user.model";
 import userRepo from './user.repository';
 import taskRepo from '../tasks/task.repository';
-import Task from "resources/tasks/task.model";
+import Task from "../../resources/tasks/task.model";
 
 async function getAll(): Promise<User[]> {
   return await userRepo.getAll();

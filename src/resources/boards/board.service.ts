@@ -1,7 +1,7 @@
 import boardRepo from './board.repository';
 import taskRepo from '../tasks/task.repository';
-import Board from "resources/boards/board.model";
-import Task from "resources/tasks/task.model";
+import { Board } from "../../resources/boards/board.model";
+import Task from "../../resources/tasks/task.model";
 
 async function getAll(): Promise<Board[]> {
   return boardRepo.getAll();

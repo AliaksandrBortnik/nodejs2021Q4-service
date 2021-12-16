@@ -1,4 +1,4 @@
-const TaskSchema = {
+const TaskResponseSchema = {
   type: 'object',
   required: ['title', 'order', 'description'],
   properties: {
@@ -10,6 +10,6 @@ const TaskSchema = {
     boardId: { type: 'string', nullable: true, format: 'uuid' },
     columnId: { type: 'string', nullable: true, format: 'uuid' }
   }
-}
+};
 
-export default TaskSchema;
+export default TaskResponseSchema;

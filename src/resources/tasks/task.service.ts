@@ -1,5 +1,5 @@
 import taskRepo from "./task.repository";
-import Task from "resources/tasks/task.model";
+import Task from "./task.model";
 
 async function getAll(boardId: string): Promise<Task[]> {
   return taskRepo.getAllByBoardId(boardId);

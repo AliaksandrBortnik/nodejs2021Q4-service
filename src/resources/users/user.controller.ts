@@ -1,6 +1,6 @@
 import {FastifyReply, FastifyRequest } from "fastify";
 import UserService from "./user.service";
-import User from "resources/users/user.model";
+import User from "./user.model";
 
 type CustomFastifyRequest = FastifyRequest<{
   Params: { id: string },
@@ -13,7 +13,7 @@ async function getAll(_: CustomFastifyRequest, res: FastifyReply): Promise<void>
 }
 
 async function getById(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const user = await UserService.getById(req.params.id);
+  const user: User | undefined = await UserService.getById(req.params.id);
 
   if (!user) {
     res.code(404).send({ message: 'Not Found' });
@@ -59,4 +59,3 @@ export default {
   update,
   remove
 };
-

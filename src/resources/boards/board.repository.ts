@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 import store from '../../store';
-import Board from "resources/boards/board.model";
+import { Board } from "./board.model";
 
 async function getAll(): Promise<Board[]> {
   return store.boards;

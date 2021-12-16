@@ -1,5 +1,5 @@
 import TaskController from './task.controller';
-import TaskSchema from './task.schema';
+import TaskResponseSchema from './task-response.schema';
 
 const options = {
   getAll: {
@@ -10,7 +10,7 @@ const options = {
       response: {
         200: {
           type: 'array',
-            items: TaskSchema
+            items: TaskResponseSchema
         }
       }
     },
@@ -23,7 +23,7 @@ const options = {
         taskId: { type: 'string', format: 'uuid' }
       },
       response: {
-        200: TaskSchema
+        200: TaskResponseSchema
       }
     },
     handler: TaskController.getById
@@ -46,7 +46,7 @@ const options = {
         }
       },
       response: {
-        201: TaskSchema
+        201: TaskResponseSchema
       }
     },
     handler: TaskController.add
@@ -70,7 +70,7 @@ const options = {
         }
       },
       response: {
-        200: TaskSchema
+        200: TaskResponseSchema
       }
     },
     handler: TaskController.update

@@ -1,5 +1,5 @@
 import UserController from './user.controller';
-import User from './user.schema';
+import UserResponseSchema from './user-response.schema';
 
 const options = {
   getAll: {
@@ -7,7 +7,7 @@ const options = {
       response: {
         200: {
           type: 'array',
-          items: User
+          items: UserResponseSchema
         }
       }
     },
@@ -19,7 +19,7 @@ const options = {
         id: { type: 'string', format: 'uuid' }
       },
       response: {
-        200: User
+        200: UserResponseSchema
       }
     },
     handler: UserController.getById
@@ -36,7 +36,7 @@ const options = {
         }
       },
       response: {
-        201: User
+        201: UserResponseSchema
       }
     },
     handler: UserController.add
@@ -56,7 +56,7 @@ const options = {
         }
       },
       response: {
-        200: User
+        200: UserResponseSchema
       }
     },
     handler: UserController.update

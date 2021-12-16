@@ -1,13 +1,11 @@
-interface Board {
+export interface Board {
   id: string, // uuid
   title: string,
   columns: Column[]
 }
 
-interface Column {
+export interface Column {
   id: string, // uuid
   title: string,
   order: number
 }
-
-export default Board;

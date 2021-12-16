@@ -1,5 +1,5 @@
-import BoardSchema from './schemas/board.schema';
-import ColumnSchema from './schemas/column.schema';
+import BoardResponseSchema from './schemas/board-response.schema';
+import ColumnResponseSchema from './schemas/column-response.schema';
 import BoardController from './board.controller';
 
 const options = {
@@ -8,7 +8,7 @@ const options = {
       response: {
         200: {
           type: 'array',
-          items: BoardSchema
+          items: BoardResponseSchema
         }
       }
     },
@@ -20,7 +20,7 @@ const options = {
         id: { type: 'string', format: 'uuid' }
       },
       response: {
-        200: BoardSchema
+        200: BoardResponseSchema
       }
     },
     handler: BoardController.getById
@@ -34,12 +34,12 @@ const options = {
           title: { type: 'string' },
           columns: {
             type: 'array',
-            items: ColumnSchema
+            items: ColumnResponseSchema
           }
         }
       },
       response: {
-        201: BoardSchema
+        201: BoardResponseSchema
       }
     },
     handler: BoardController.add
@@ -56,12 +56,12 @@ const options = {
           title: { type: 'string' },
           columns: {
             type: 'array',
-            items: ColumnSchema
+            items: ColumnResponseSchema
           }
         }
       },
       response: {
-        200: BoardSchema
+        200: BoardResponseSchema
       }
     },
     handler: BoardController.update

@@ -1,6 +1,6 @@
 import TaskService from './task.service';
 import {FastifyReply, FastifyRequest} from 'fastify';
-import Task from "resources/tasks/task.model";
+import Task from "./task.model";
 
 type CustomFastifyRequest = FastifyRequest<{
   Params: {
