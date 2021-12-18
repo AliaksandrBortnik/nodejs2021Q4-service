@@ -39,8 +39,7 @@ export class TaskRepository {
    * @returns Returns promise of a new task
    */
   async add(boardId: string, task: Task): Promise<Task> {
-    const entity: Task = { ...task, id: uuidv4() };
-    entity.boardId = boardId; // TODO: we can simplify it above
+    const entity: Task = { ...task, id: uuidv4(), boardId };
     store.tasks.push(entity);
     return entity;
   }
