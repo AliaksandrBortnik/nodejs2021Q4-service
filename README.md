@@ -2,6 +2,8 @@
 
 Note: If a function returns `void` or `Promise<void>`, no need to specific explicit @returns for TSDoc. Doc generator will infer types itself.
 
+TS documentation is available in `/docs/index.html`.
+
 1. git clone https://github.com/AliaksandrBortnik/nodejs2021Q4-service/pull/2
 2. Switch to `task5-ts`.
 3. Change directory `cd nodejs2021Q4-service`.
