@@ -1,5 +1,6 @@
 {
-  "entryPoints": ["src/server.ts"],
-  "out": "ts-docs",
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src"],
+  "entryPointStrategy": "Expand",
   "readme": "none"
 }

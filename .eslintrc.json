@@ -7,9 +7,6 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint"
-  ],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2021,
@@ -17,15 +14,21 @@
       "impliedStrict": true
     }
   },
-  "settings": {
-    "noInlineConfig": true
-  },
+  "plugins": [
+    "@typescript-eslint",
+    "@typescript-eslint/eslint-plugin",
+    "eslint-plugin-tsdoc"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "settings": {
+    "noInlineConfig": true
+  },
   "rules": {
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "tsdoc/syntax": "warn"
   }
 }
