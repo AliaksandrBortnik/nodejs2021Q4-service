@@ -13,8 +13,8 @@ export class UserController {
 
   /**
    * Constructor of UserController class
-   * @param req - request
-   * @param res - response
+   * @param req - request object
+   * @param res - response object
    */
   constructor(req: UserFastifyRequest, res: FastifyReply) {
     this.req = req;
@@ -60,7 +60,7 @@ export class UserController {
    */
   async update(): Promise<void> {
     const userId: string = this.req.params.id;
-    const userExists: boolean = !!(await this.userService.getById(userId));
+    const userExists = !!(await this.userService.getById(userId));
 
     if (!userExists) {
       this.res.code(404).send({ message: 'Not Found' });
@@ -77,7 +77,7 @@ export class UserController {
    */
   async remove(): Promise<void> {
     const userId: string = this.req.params.id;
-    const userExists: boolean = !!(await this.userService.getById(userId));
+    const userExists = !!(await this.userService.getById(userId));
 
     if (!userExists) {
       this.res.code(404).send({ message: 'Not Found' });

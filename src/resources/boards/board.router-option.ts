@@ -16,8 +16,8 @@ export const boardRouterOption = {
     },
     /**
      * Get all boards handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: BoardFastifyRequest, res: FastifyReply) =>
       new BoardController(req, res).getAll()
@@ -33,8 +33,8 @@ export const boardRouterOption = {
     },
     /**
      * Get board by ID handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: BoardFastifyRequest, res: FastifyReply) =>
       new BoardController(req, res).getById()
@@ -58,8 +58,8 @@ export const boardRouterOption = {
     },
     /**
      * Add board handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: BoardFastifyRequest, res: FastifyReply) =>
       new BoardController(req, res).add()
@@ -86,8 +86,8 @@ export const boardRouterOption = {
     },
     /**
      * Update board handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: BoardFastifyRequest, res: FastifyReply) =>
       new BoardController(req, res).update()
@@ -106,8 +106,8 @@ export const boardRouterOption = {
     },
     /**
      * Remove board handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: BoardFastifyRequest, res: FastifyReply) =>
       new BoardController(req, res).remove()

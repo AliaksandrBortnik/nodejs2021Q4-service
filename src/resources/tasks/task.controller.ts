@@ -13,8 +13,8 @@ export class TaskController {
 
   /**
    * Constructor of TaskController class
-   * @param req - request
-   * @param res - response
+   * @param req - request object
+   * @param res - response object
    */
   constructor(req: TaskFastifyRequest, res: FastifyReply) {
     this.req = req;
@@ -54,6 +54,7 @@ export class TaskController {
    */
   async add(): Promise<void> {
     const boardId: string = this.req.params.boardId;
+    // TODO: validate if boardId from params is the same like in body payload
     const task: Task | undefined = await this.taskService.add(boardId, this.req.body);
     this.res.status(201).send(task);
   }
@@ -66,7 +67,7 @@ export class TaskController {
     const boardId: string = this.req.params.boardId;
     const taskId: string = this.req.params.taskId;
 
-    const taskExists: boolean = !!(await this.taskService.getById(boardId, taskId));
+    const taskExists = !!(await this.taskService.getById(boardId, taskId));
 
     if (!taskExists) {
       this.res.code(404).send({ message: 'Not Found' });

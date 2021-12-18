@@ -15,8 +15,8 @@ export const userRouterOption = {
     },
     /**
      * Get all users handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: UserFastifyRequest, res: FastifyReply) =>
       new UserController(req, res).getAll()
@@ -32,8 +32,8 @@ export const userRouterOption = {
     },
     /**
      * Get user by ID handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: UserFastifyRequest, res: FastifyReply) =>
       new UserController(req, res).getById()
@@ -55,8 +55,8 @@ export const userRouterOption = {
     },
     /**
      * Add user handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: UserFastifyRequest, res: FastifyReply) =>
       new UserController(req, res).add()
@@ -81,8 +81,8 @@ export const userRouterOption = {
     },
     /**
      * Update user handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: UserFastifyRequest, res: FastifyReply) =>
       new UserController(req, res).update()
@@ -101,8 +101,8 @@ export const userRouterOption = {
     },
     /**
      * Remove user handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: UserFastifyRequest, res: FastifyReply) =>
       new UserController(req, res).remove()

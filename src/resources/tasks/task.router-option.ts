@@ -18,8 +18,8 @@ export const taskRouterOption = {
     },
     /**
      * Get all tasks of the board handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: TaskFastifyRequest, res: FastifyReply) =>
       new TaskController(req, res).getAllByBoardId()
@@ -36,8 +36,8 @@ export const taskRouterOption = {
     },
     /**
      * Get task by ID handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: TaskFastifyRequest, res: FastifyReply) =>
       new TaskController(req, res).getById()
@@ -65,8 +65,8 @@ export const taskRouterOption = {
     },
     /**
      * Add task handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: TaskFastifyRequest, res: FastifyReply) =>
       new TaskController(req, res).add()
@@ -95,8 +95,8 @@ export const taskRouterOption = {
     },
     /**
      * Update task handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: TaskFastifyRequest, res: FastifyReply) =>
       new TaskController(req, res).update()
@@ -116,8 +116,8 @@ export const taskRouterOption = {
     },
     /**
      * Remove task handler
-     * @param req - request
-     * @param res - response
+     * @param req - request object
+     * @param res - response object
      */
     handler: (req: TaskFastifyRequest, res: FastifyReply) =>
       new TaskController(req, res).remove()

@@ -13,8 +13,8 @@ export class BoardController {
 
   /**
    * Constructor of BoardController class
-   * @param req - request
-   * @param res - response
+   * @param req - request object
+   * @param res - response object
    */
   constructor(req: BoardFastifyRequest, res: FastifyReply) {
     this.req = req;
@@ -60,7 +60,7 @@ export class BoardController {
    */
   async update(): Promise<void> {
     const boardId: string = this.req.params.id;
-    const boardExists: boolean = !!(await this.boardService.getById(boardId));
+    const boardExists = !!(await this.boardService.getById(boardId));
 
     if (!boardExists) {
       this.res.code(404).send({ message: 'Not Found' });
@@ -77,7 +77,7 @@ export class BoardController {
    */
   async remove(): Promise<void> {
     const boardId: string = this.req.params.id;
-    const boardExists: boolean = !!(await this.boardService.getById(boardId));
+    const boardExists = !!(await this.boardService.getById(boardId));
 
     if (!boardExists) {
       this.res.code(404).send({ message: 'Not Found' });
