@@ -1,6 +1,8 @@
 # RS School REST service
 
-Don't forget to switch to ```task5-ts``` branch.
+Don't forget to switch to ```task5-ts``` branch and `cd nodejs2021Q4-service`.
+
+To generate documentation, use `npm run doc`. Then open `docs` folder in the project, where you can find the result and open `index.html` in your browser.
 
 ## Downloading
 
