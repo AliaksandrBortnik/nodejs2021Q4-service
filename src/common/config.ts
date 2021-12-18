@@ -1,12 +1,12 @@
-import dotenv from 'dotenv';
-import path from 'path';
-import process from 'process';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import * as process from 'process';
 
 dotenv.config({
   path: path.join(__dirname, '../../.env')
 });
 
-const config: IConfig = {
+const config: Config = {
   PORT: process.env.PORT,
   NODE_ENV: process.env.NODE_ENV,
   MONGO_CONNECTION_STRING: process.env.MONGO_CONNECTION_STRING,
@@ -14,7 +14,7 @@ const config: IConfig = {
   AUTH_MODE: process.env.AUTH_MODE === 'true'
 };
 
-interface IConfig {
+export interface Config {
   PORT: string | undefined,
   NODE_ENV: string | undefined,
   MONGO_CONNECTION_STRING: string | undefined,

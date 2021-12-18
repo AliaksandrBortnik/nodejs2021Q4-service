@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 import fastifySwagger from 'fastify-swagger';
 import {
   fastify,
@@ -8,9 +8,9 @@ import {
   FastifyRegisterOptions,
   FastifyServerOptions
 } from 'fastify';
-import userRouter from './resources/users/user.router';
-import boardRouter from './resources/boards/board.router';
-import taskRouter from './resources/tasks/task.router';
+import {userRouter} from './resources/users/user.router';
+import {boardRouter} from './resources/boards/board.router';
+import {taskRouter} from './resources/tasks/task.router';
 
 const app: FastifyInstance = fastify({ logger: true } as FastifyServerOptions);
 
