@@ -29,9 +29,14 @@ export class BoardRepository {
    * @returns Returns promise of a new board
    */
   async add(board: Board): Promise<Board> {
-    const entity: Board = {...board, id: uuidv4()};
-    store.boards.push(entity);
-    return entity;
+    const newBoard: Board = {...board, id: uuidv4()};
+
+    for (const column of newBoard.columns) {
+      column.id = uuidv4();
+    }
+
+    store.boards.push(newBoard);
+    return newBoard;
   }
 
   /**
