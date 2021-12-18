@@ -9,6 +9,7 @@
   "description": "REST service",
   "main": "src/server.ts",
   "scripts": {
+    "build": "tsc --project tsconfig.json",
     "start": "nodemon src/server.ts",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
