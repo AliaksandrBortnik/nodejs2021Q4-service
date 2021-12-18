@@ -1,0 +1,5 @@
+{
+  "entryPoints": ["src/server.ts"],
+  "out": "ts-docs",
+  "readme": "none"
+}

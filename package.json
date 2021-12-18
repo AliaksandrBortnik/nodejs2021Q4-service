@@ -9,6 +9,7 @@
   "description": "REST service",
   "main": "src/server.ts",
   "scripts": {
+    "tsdoc": "typedoc",
     "build": "tsc --project tsconfig.json",
     "start": "nodemon src/server.ts",
     "lint": "eslint --ext .js,.ts --fix src/",
@@ -64,6 +65,7 @@
     "prettier": "2.4.1",
     "supertest": "6.1.6",
     "ts-node": "^10.4.0",
+    "typedoc": "^0.22.10",
     "typescript": "^4.5.2"
   }
 }
