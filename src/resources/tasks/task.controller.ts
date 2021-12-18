@@ -72,6 +72,11 @@ export class TaskController {
     const boardId: string = this.req.params.boardId;
     const taskId: string = this.req.params.taskId;
 
+    if (boardId !== this.req.body.boardId && this.req.body.boardId !== null) {
+      this.res.code(400).send({ message: 'Mismatch of boardId' });
+      return;
+    }
+
     const taskExists = !!(await this.taskService.getById(boardId, taskId));
 
     if (!taskExists) {
@@ -79,7 +84,7 @@ export class TaskController {
       return;
     }
 
-    const task: Task = await this.taskService.update(boardId, taskId, this.req.body);
+    const task: Task = await this.taskService.update(taskId, this.req.body);
     this.res.code(200).send(task);
   }
 
@@ -98,7 +103,7 @@ export class TaskController {
       return;
     }
 
-    await this.taskService.remove(boardId, taskId);
+    await this.taskService.remove(taskId);
     this.res.code(204);
   }
 }

@@ -1,21 +1,20 @@
 import { User } from "./user.model";
 import { UserRepository } from './user.repository';
-import { TaskRepository } from '../tasks/task.repository';
-import { Task } from "../tasks/task.model";
+import { TaskService } from '../tasks/task.service';
 
 /**
  * User's business logic and work with Data Access Layer
  */
 export class UserService {
   userRepo: UserRepository;
-  taskRepo: TaskRepository;
+  taskService: TaskService;
 
   /**
    * Constructor of UserService class
    */
   constructor() {
     this.userRepo = new UserRepository();
-    this.taskRepo = new TaskRepository();
+    this.taskService = new TaskService();
   }
 
   /**
@@ -59,20 +58,7 @@ export class UserService {
    * @param id - User's id
    */
   async remove(id: string): Promise<void> {
-    const tasks: Task[] = await this.taskRepo.getAll();
-    const userTasks: Task[] = tasks.filter(t => t.userId === id);
-
-    const tasksUpdateBatch: Promise<Task>[] = [];
-
-    for (let i = 0; i < userTasks.length; i += 1) {
-      userTasks[i].userId = null;
-      tasksUpdateBatch.push(this.taskRepo.update(userTasks[i].id, userTasks[i]));
-    }
-
-    if (tasksUpdateBatch.length) {
-      await Promise.all(tasksUpdateBatch);
-    }
-
+    await this.taskService.unassignUser(id);
     await this.userRepo.remove(id);
   }
 }

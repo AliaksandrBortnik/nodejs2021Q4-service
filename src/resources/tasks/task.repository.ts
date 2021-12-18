@@ -7,11 +7,12 @@ import { Task } from "./task.model";
  */
 export class TaskRepository {
   /**
-   * Get all tasks from DB
-   * @returns Returns promise of all existing tasks
+   * Get all tasks by userId from DB
+   * @param userId - User's id
+   * @returns Returns promise of all existing tasks of the user
    */
-  async getAll(): Promise<Task[]> {
-    return store.tasks;
+  async getAllByUserId(userId: string): Promise<Task[]> {
+    return store.tasks.filter(t => t.userId === userId);
   }
 
   /**

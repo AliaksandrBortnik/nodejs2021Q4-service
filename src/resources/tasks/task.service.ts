@@ -45,21 +45,39 @@ export class TaskService {
 
   /**
    * Update the task
-   * @param boardId - Board's id
    * @param taskId - Task id
    * @param task - Task's payload
    * @returns Returns promise of updated task
    */
-  async update(boardId: string, taskId: string, task: Task): Promise<Task> {
+  async update(taskId: string, task: Task): Promise<Task> {
     return this.taskRepo.update(taskId, task);
   }
 
   /**
    * Removes the task by id
-   * @param boardId - Board's id
    * @param id - Task's id
    */
-  async remove(boardId: string, id: string): Promise<void> {
+  async remove(id: string): Promise<void> {
     return this.taskRepo.remove(id);
+  }
+
+  /**
+   * Unassign user from all his tasks
+   * @param userId - User's id
+   */
+  async unassignUser(userId: string): Promise<void> {
+    const userTasks: Task[] = await this.taskRepo.getAllByUserId(userId);
+
+    const tasksUpdateBatch: Promise<Task>[] = [];
+
+    for (let i = 0; i < userTasks.length; i += 1) {
+      const userTaskId: string = userTasks[i].id;
+      const updatedTask: Task = { ...userTasks[i], userId: null };
+      tasksUpdateBatch.push(this.taskRepo.update(userTaskId, updatedTask));
+    }
+
+    if (tasksUpdateBatch.length) {
+      await Promise.all(tasksUpdateBatch);
+    }
   }
 }
