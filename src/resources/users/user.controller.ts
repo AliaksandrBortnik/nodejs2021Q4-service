@@ -1,61 +1,88 @@
-import {FastifyReply, FastifyRequest } from "fastify";
-import UserService from "./user.service";
-import User from "./user.model";
+import { FastifyReply } from "fastify";
+import { UserService } from "./user.service";
+import { User } from "./user.model";
+import {UserFastifyRequest} from "./user.request";
 
-type CustomFastifyRequest = FastifyRequest<{
-  Params: { id: string },
-  Body: User
-}>;
+/**
+ * Class to handle all User's requests
+ */
+export class UserController {
+  req: UserFastifyRequest;
+  res: FastifyReply;
+  userService: UserService;
 
-async function getAll(_: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const users = await UserService.getAll();
-  res.code(200).send(users);
-}
-
-async function getById(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const user: User | undefined = await UserService.getById(req.params.id);
-
-  if (!user) {
-    res.code(404).send({ message: 'Not Found' });
-    return;
+  /**
+   * Constructor of UserController class
+   * @param req - request
+   * @param res - response
+   */
+  constructor(req: UserFastifyRequest, res: FastifyReply) {
+    this.req = req;
+    this.res = res;
+    this.userService = new UserService();
   }
 
-  res.code(200).send(user);
-}
-
-async function add(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const user = await UserService.add(req.body);
-  res.status(201).send(user);
-}
-
-async function update(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const userExists = !!(await UserService.getById(req.params.id));
-
-  if (!userExists) {
-    res.code(404).send({ message: 'Not Found' });
-    return;
+  /**
+   * Get all users and send users as a response with 200 status.
+   */
+  async getAll(): Promise<void> {
+    const users = await this.userService.getAll();
+    this.res.code(200).send(users);
   }
 
-  const user: User = await UserService.update(req.params.id, req.body);
-  res.code(200).send(user);
-}
+  /**
+   * Get a user by ID and send the user as a response with 200 status if found.
+   * Otherwise, send 404 response
+   */
+  async getById(): Promise<void> {
+    const userId: string = this.req.params.id;
+    const user: User | undefined = await this.userService.getById(userId);
 
-async function remove(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const userExists = !!(await UserService.getById(req.params.id));
+    if (!user) {
+      this.res.code(404).send({ message: 'Not Found' });
+      return;
+    }
 
-  if (!userExists) {
-    res.code(404).send({ message: 'Not Found' });
-    return;
+    this.res.code(200).send(user);
   }
 
-  await UserService.remove(req.params.id);
-  res.code(204);
-}
+  /**
+   * Add a user and send the created user as a response with 201 status.
+   */
+  async add(): Promise<void> {
+    const user: User = await this.userService.add(this.req.body);
+    this.res.status(201).send(user);
+  }
 
-export default {
-  getAll,
-  getById,
-  add,
-  update,
-  remove
-};
+  /**
+   * Update a user and send the updated user as a response with 200 status if found.
+   * Otherwise, send 404 response.
+   */
+  async update(): Promise<void> {
+    const userExists = !!(await this.userService.getById(this.req.params.id));
+
+    if (!userExists) {
+      this.res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
+    const user: User = await this.userService.update(this.req.params.id, this.req.body);
+    this.res.code(200).send(user);
+  }
+
+  /**
+   * Remove a user and send a response with 204 status if found.
+   * Otherwise, send 404 response.
+   */
+  async remove(): Promise<void> {
+    const userExists = !!(await this.userService.getById(this.req.params.id));
+
+    if (!userExists) {
+      this.res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
+    await this.userService.remove(this.req.params.id);
+    this.res.code(204);
+  }
+}

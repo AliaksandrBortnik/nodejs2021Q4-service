@@ -1,5 +1,7 @@
-import UserController from './user.controller';
+import {UserController} from './user.controller';
 import UserResponseSchema from './user-response.schema';
+import {FastifyReply} from "fastify";
+import {UserFastifyRequest} from "./user.request";
 
 const options = {
   getAll: {
@@ -11,7 +13,13 @@ const options = {
         }
       }
     },
-    handler: UserController.getAll
+    /**
+     * Get all users handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+      new UserController(req, res).getAll()
   },
   getById: {
     schema: {
@@ -22,7 +30,13 @@ const options = {
         200: UserResponseSchema
       }
     },
-    handler: UserController.getById
+    /**
+     * Get user by ID handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+      new UserController(req, res).getById()
   },
   add: {
     schema: {
@@ -39,7 +53,13 @@ const options = {
         201: UserResponseSchema
       }
     },
-    handler: UserController.add
+    /**
+     * Add user handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+      new UserController(req, res).add()
   },
   update: {
     schema: {
@@ -59,7 +79,13 @@ const options = {
         200: UserResponseSchema
       }
     },
-    handler: UserController.update
+    /**
+     * Update user handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+      new UserController(req, res).update()
   },
   remove: {
     schema: {
@@ -73,7 +99,13 @@ const options = {
         }
       }
     },
-    handler: UserController.remove
+    /**
+     * Remove user handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+      new UserController(req, res).remove()
   }
 }
 
