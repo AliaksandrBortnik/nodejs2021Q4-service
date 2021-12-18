@@ -3,7 +3,7 @@ import UserResponseSchema from './user-response.schema';
 import {FastifyReply} from "fastify";
 import {UserFastifyRequest} from "./user.request";
 
-const options = {
+export const userRouterOption = {
   getAll: {
     schema: {
       response: {
@@ -107,6 +107,4 @@ const options = {
     handler: (req: UserFastifyRequest, res: FastifyReply) =>
       new UserController(req, res).remove()
   }
-}
-
-export default options;
+};

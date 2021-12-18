@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyPluginAsync} from "fastify";
-import options from './board.router-option';
+import {boardRouterOption as options} from './board.router-option';
 
 /**
  * Handle board routes

@@ -3,7 +3,7 @@ import TaskResponseSchema from './task-response.schema';
 import {TaskFastifyRequest} from "./task.request";
 import {FastifyReply} from "fastify";
 
-const options = {
+export const taskRouterOption = {
   getAll: {
     schema: {
       params: {
@@ -122,6 +122,4 @@ const options = {
     handler: (req: TaskFastifyRequest, res: FastifyReply) =>
       new TaskController(req, res).remove()
   }
-}
-
-export default options;
+};

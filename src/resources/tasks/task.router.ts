@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyPluginAsync } from 'fastify';
-import options from './task.router-option';
+import {taskRouterOption as options} from './task.router-option';
 
 /**
  * Handle task routes

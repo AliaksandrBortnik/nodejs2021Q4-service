@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import options from './user.router-option';
+import { userRouterOption as options } from './user.router-option';
 
 /**
  * Handle user routes

@@ -4,7 +4,7 @@ import {BoardController} from './board.controller';
 import {BoardFastifyRequest} from "./board.request";
 import {FastifyReply} from "fastify";
 
-const options = {
+export const boardRouterOption = {
   getAll: {
     schema: {
       response: {
@@ -113,5 +113,3 @@ const options = {
       new BoardController(req, res).remove()
   }
 };
-
-export default options;
