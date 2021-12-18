@@ -1,35 +1,56 @@
 import {v4 as uuidv4} from 'uuid';
-import store from '../../store';
-import { Board } from "./board.model";
+import {store} from '../../store';
+import {Board} from "./board.model";
 
-async function getAll(): Promise<Board[]> {
-  return store.boards;
+/**
+ * Board's repository to work with DB
+ */
+export class BoardRepository {
+  /**
+   * Get all boards from DB
+   * @returns Returns promise of all existing boards
+   */
+  async getAll(): Promise<Board[]> {
+    return store.boards;
+  }
+
+  /**
+   * Get board by id from DB
+   * @param id - Board's id
+   * @returns Returns promise of a board if found
+   */
+  async getById(id: string): Promise<Board | undefined> {
+    return store.boards.find(u => u.id === id);
+  }
+
+  /**
+   * Add a new board to DB
+   * @param board - Board payload
+   * @returns Returns promise of a new board
+   */
+  async add(board: Board): Promise<Board> {
+    const entity: Board = {...board, id: uuidv4()};
+    store.boards.push(entity);
+    return entity;
+  }
+
+  /**
+   * Update the board in DB
+   * @param id - Board's id
+   * @param board - Board's payload
+   * @returns Returns promise of updated board
+   */
+  async update(id: string, board: Board): Promise<Board> {
+    const index: number = store.boards.findIndex(u => u.id === id);
+    store.boards[index] = { ...board, id };
+    return store.boards[index];
+  }
+
+  /**
+   * Removes the board by id from DB
+   * @param id - Board's id
+   */
+  async remove(id: string): Promise<void> {
+    store.boards = store.boards.filter(u => u.id !== id);
+  }
 }
-
-async function getById(id: string): Promise<Board | undefined> {
-  return store.boards.find(u => u.id === id);
-}
-
-async function add(board: Board): Promise<Board> {
-  const entity: Board = {...board, id: uuidv4()};
-  store.boards.push(entity);
-  return entity;
-}
-
-async function update(id: string, board: Board): Promise<Board> {
-  const index: number = store.boards.findIndex(u => u.id === id);
-  store.boards[index] = { ...board, id };
-  return store.boards[index];
-}
-
-async function remove(id: string): Promise<void> {
-  store.boards = store.boards.filter(u => u.id !== id);
-}
-
-export default {
-  getAll,
-  getById,
-  add,
-  update,
-  remove
-};

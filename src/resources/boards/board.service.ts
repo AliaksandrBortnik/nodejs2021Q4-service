@@ -1,44 +1,75 @@
-import boardRepo from './board.repository';
-import taskRepo from '../tasks/task.repository';
-import { Board } from "../../resources/boards/board.model";
-import Task from "../../resources/tasks/task.model";
+import {BoardRepository} from './board.repository';
+import {TaskRepository} from '../tasks/task.repository';
+import { Board } from "./board.model";
+import {Task} from "../tasks/task.model";
 
-async function getAll(): Promise<Board[]> {
-  return boardRepo.getAll();
-}
+/**
+ * Board's business logic and work with Data Access Layer
+ */
+export class BoardService {
+  boardRepo: BoardRepository;
+  taskRepo: TaskRepository;
 
-async function getById(id: string): Promise<Board | undefined> {
-  return boardRepo.getById(id);
-}
-
-async function add(board: Board): Promise<Board> {
-  return boardRepo.add(board);
-}
-
-async function update(id: string, board: Board): Promise<Board> {
-  return boardRepo.update(id, board);
-}
-
-async function remove(id: string): Promise<void> {
-  const tasks: Task[] = await taskRepo.getAll();
-  const boardTasks: Task[] = tasks.filter(t => t.boardId === id);
-  const tasksRemoveBatch: Promise<void>[] = [];
-
-  for (let i = 0; i < boardTasks.length; i += 1) {
-    tasksRemoveBatch.push(taskRepo.remove(boardTasks[i].id));
+  /**
+   * Constructor of BoardService class
+   */
+  constructor() {
+    this.boardRepo = new BoardRepository();
+    this.taskRepo = new TaskRepository();
   }
 
-  if (tasksRemoveBatch.length) {
-    await Promise.all(tasksRemoveBatch);
+  /**
+   * Get all boards
+   * @returns Returns promise of all existing boards
+   */
+  async getAll(): Promise<Board[]> {
+    return this.boardRepo.getAll();
   }
 
-  await boardRepo.remove(id);
-}
+  /**
+   * Get board by id
+   * @param id - Board's id
+   * @returns Returns promise of a board if found
+   */
+  async getById(id: string): Promise<Board | undefined> {
+    return this.boardRepo.getById(id);
+  }
 
-export default {
-  getAll,
-  getById,
-  add,
-  update,
-  remove
-};
+  /**
+   * Add a new board
+   * @param board - Board payload
+   * @returns Returns promise of a new board
+   */
+  async add(board: Board): Promise<Board> {
+    return this.boardRepo.add(board);
+  }
+
+  /**
+   * Update the board
+   * @param id - Board's id
+   * @param board - Board's payload
+   * @returns Returns promise of updated board
+   */
+  async update(id: string, board: Board): Promise<Board> {
+    return this.boardRepo.update(id, board);
+  }
+
+  /**
+   * Removes the board by id
+   * @param id - Board's id
+   */
+  async remove(id: string): Promise<void> {
+    const boardTasks: Task[] = await this.taskRepo.getAllByBoardId(id);
+    const tasksRemoveBatch: Promise<void>[] = [];
+
+    for (let i = 0; i < boardTasks.length; i += 1) {
+      tasksRemoveBatch.push(this.taskRepo.remove(boardTasks[i].id));
+    }
+
+    if (tasksRemoveBatch.length) {
+      await Promise.all(tasksRemoveBatch);
+    }
+
+    await this.boardRepo.remove(id);
+  }
+}

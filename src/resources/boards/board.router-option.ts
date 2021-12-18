@@ -1,6 +1,8 @@
 import BoardResponseSchema from './schemas/board-response.schema';
 import ColumnResponseSchema from './schemas/column-response.schema';
-import BoardController from './board.controller';
+import {BoardController} from './board.controller';
+import {BoardFastifyRequest} from "./board.request";
+import {FastifyReply} from "fastify";
 
 const options = {
   getAll: {
@@ -12,7 +14,13 @@ const options = {
         }
       }
     },
-    handler: BoardController.getAll
+    /**
+     * Get all boards handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+      new BoardController(req, res).getAll()
   },
   getById: {
     schema: {
@@ -23,7 +31,13 @@ const options = {
         200: BoardResponseSchema
       }
     },
-    handler: BoardController.getById
+    /**
+     * Get board by ID handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+      new BoardController(req, res).getById()
   },
   add: {
     schema: {
@@ -42,7 +56,13 @@ const options = {
         201: BoardResponseSchema
       }
     },
-    handler: BoardController.add
+    /**
+     * Add board handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+      new BoardController(req, res).add()
   },
   update: {
     schema: {
@@ -64,7 +84,13 @@ const options = {
         200: BoardResponseSchema
       }
     },
-    handler: BoardController.update
+    /**
+     * Update board handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+      new BoardController(req, res).update()
   },
   remove: {
     schema: {
@@ -78,7 +104,13 @@ const options = {
         }
       }
     },
-    handler: BoardController.remove
+    /**
+     * Remove board handler
+     * @param req - request
+     * @param res - response
+     */
+    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+      new BoardController(req, res).remove()
   }
 };
 

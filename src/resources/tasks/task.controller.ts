@@ -1,64 +1,92 @@
-import TaskService from './task.service';
-import {FastifyReply, FastifyRequest} from 'fastify';
-import Task from "./task.model";
+import {TaskService} from './task.service';
+import {FastifyReply} from 'fastify';
+import { Task } from "./task.model";
+import {TaskFastifyRequest} from "./task.request";
 
-type CustomFastifyRequest = FastifyRequest<{
-  Params: {
-    boardId: string,
-    taskId: string
-  },
-  Body: Task
-}>;
+/**
+ * Class to handle all Task's requests
+ */
+export class TaskController {
+  req: TaskFastifyRequest;
+  res: FastifyReply;
+  taskService: TaskService;
 
-async function getAll(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const tasks: Task[] = await TaskService.getAll(req.params.boardId);
-  res.code(200).send(tasks);
-}
-
-async function getById(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const task = await TaskService.getById(req.params.boardId, req.params.taskId);
-
-  if (!task) {
-    res.code(404).send({ message: 'Not Found' });
-    return;
+  /**
+   * Constructor of TaskController class
+   * @param req - request
+   * @param res - response
+   */
+  constructor(req: TaskFastifyRequest, res: FastifyReply) {
+    this.req = req;
+    this.res = res;
+    this.taskService = new TaskService();
   }
 
-  res.code(200).send(task);
-}
-
-async function add(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const task = await TaskService.add(req.params.boardId, req.body);
-  res.status(201).send(task);
-}
-
-async function update(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const taskExists = !!(await TaskService.getById(req.params.boardId, req.params.taskId));
-
-  if (!taskExists) {
-    res.code(404).send({ message: 'Not Found' });
-    return;
+  /**
+   * Get all tasks of the board and send tasks as a response with 200 status.
+   */
+  async getAllByBoardId(): Promise<void> {
+    const boardId: string = this.req.params.boardId;
+    const tasks: Task[] = await this.taskService.getAllByBoardId(boardId);
+    this.res.code(200).send(tasks);
   }
 
-  const task = await TaskService.update(req.params.boardId, req.params.taskId, req.body);
-  res.code(200).send(task);
-}
+  /**
+   * Get a task by ID and send the task as a response with 200 status if found.
+   * Otherwise, send 404 response
+   */
+  async getById(): Promise<void> {
+    const taskId: string = this.req.params.taskId;
+    const boardId: string = this.req.params.boardId;
 
-async function remove(req: CustomFastifyRequest, res: FastifyReply): Promise<void> {
-  const taskExists = !!(await TaskService.getById(req.params.boardId, req.params.taskId));
+    const task: Task | undefined = await this.taskService.getById(boardId, taskId);
 
-  if (!taskExists) {
-    res.code(404).send({ message: 'Not Found' });
-    return;
+    if (!task) {
+      this.res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
+    this.res.code(200).send(task);
   }
 
-  await TaskService.remove(req.params.boardId, req.params.taskId);
-  res.code(204);
-}
+  /**
+   * Add a task and send the created task as a response with 201 status.
+   */
+  async add(): Promise<void> {
+    const boardId: string = this.req.params.boardId;
+    const task: Task | undefined = await this.taskService.add(boardId, this.req.body);
+    this.res.status(201).send(task);
+  }
 
-export default {
-  getAll,
-  getById,
-  add,
-  update,
-  remove
-};
+  /**
+   * Update a task and send the updated task as a response with 200 status if found.
+   * Otherwise, send 404 response.
+   */
+  async update(): Promise<void> {
+    const taskExists = !!(await this.taskService.getById(this.req.params.boardId, this.req.params.taskId));
+
+    if (!taskExists) {
+      this.res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
+    const task: Task = await this.taskService.update(this.req.params.boardId, this.req.params.taskId, this.req.body);
+    this.res.code(200).send(task);
+  }
+
+  /**
+   * Remove a task and send a response with 204 status if found.
+   * Otherwise, send 404 response.
+   */
+  async remove(): Promise<void> {
+    const taskExists = !!(await this.taskService.getById(this.req.params.boardId, this.req.params.taskId));
+
+    if (!taskExists) {
+      this.res.code(404).send({ message: 'Not Found' });
+      return;
+    }
+
+    await this.taskService.remove(this.req.params.boardId, this.req.params.taskId);
+    this.res.code(204);
+  }
+}
