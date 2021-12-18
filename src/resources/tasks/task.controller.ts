@@ -54,7 +54,12 @@ export class TaskController {
    */
   async add(): Promise<void> {
     const boardId: string = this.req.params.boardId;
-    // TODO: validate if boardId from params is the same like in body payload
+
+    if (boardId !== this.req.body.boardId && this.req.body.boardId !== null) {
+      this.res.code(400).send({ message: 'Mismatch of boardId' });
+      return;
+    }
+
     const task: Task | undefined = await this.taskService.add(boardId, this.req.body);
     this.res.status(201).send(task);
   }
