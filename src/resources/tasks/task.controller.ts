@@ -63,14 +63,17 @@ export class TaskController {
    * Otherwise, send 404 response.
    */
   async update(): Promise<void> {
-    const taskExists = !!(await this.taskService.getById(this.req.params.boardId, this.req.params.taskId));
+    const boardId: string = this.req.params.boardId;
+    const taskId: string = this.req.params.taskId;
+
+    const taskExists: boolean = !!(await this.taskService.getById(boardId, taskId));
 
     if (!taskExists) {
       this.res.code(404).send({ message: 'Not Found' });
       return;
     }
 
-    const task: Task = await this.taskService.update(this.req.params.boardId, this.req.params.taskId, this.req.body);
+    const task: Task = await this.taskService.update(boardId, taskId, this.req.body);
     this.res.code(200).send(task);
   }
 
@@ -79,14 +82,17 @@ export class TaskController {
    * Otherwise, send 404 response.
    */
   async remove(): Promise<void> {
-    const taskExists = !!(await this.taskService.getById(this.req.params.boardId, this.req.params.taskId));
+    const boardId: string = this.req.params.boardId;
+    const taskId: string = this.req.params.taskId;
+
+    const taskExists = !!(await this.taskService.getById(boardId, taskId));
 
     if (!taskExists) {
       this.res.code(404).send({ message: 'Not Found' });
       return;
     }
 
-    await this.taskService.remove(this.req.params.boardId, this.req.params.taskId);
+    await this.taskService.remove(boardId, taskId);
     this.res.code(204);
   }
 }

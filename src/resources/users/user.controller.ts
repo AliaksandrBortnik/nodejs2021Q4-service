@@ -26,7 +26,7 @@ export class UserController {
    * Get all users and send users as a response with 200 status.
    */
   async getAll(): Promise<void> {
-    const users = await this.userService.getAll();
+    const users: User[] = await this.userService.getAll();
     this.res.code(200).send(users);
   }
 
@@ -59,14 +59,15 @@ export class UserController {
    * Otherwise, send 404 response.
    */
   async update(): Promise<void> {
-    const userExists = !!(await this.userService.getById(this.req.params.id));
+    const userId: string = this.req.params.id;
+    const userExists: boolean = !!(await this.userService.getById(userId));
 
     if (!userExists) {
       this.res.code(404).send({ message: 'Not Found' });
       return;
     }
 
-    const user: User = await this.userService.update(this.req.params.id, this.req.body);
+    const user: User = await this.userService.update(userId, this.req.body);
     this.res.code(200).send(user);
   }
 
@@ -75,14 +76,15 @@ export class UserController {
    * Otherwise, send 404 response.
    */
   async remove(): Promise<void> {
-    const userExists = !!(await this.userService.getById(this.req.params.id));
+    const userId: string = this.req.params.id;
+    const userExists: boolean = !!(await this.userService.getById(userId));
 
     if (!userExists) {
       this.res.code(404).send({ message: 'Not Found' });
       return;
     }
 
-    await this.userService.remove(this.req.params.id);
+    await this.userService.remove(userId);
     this.res.code(204);
   }
 }

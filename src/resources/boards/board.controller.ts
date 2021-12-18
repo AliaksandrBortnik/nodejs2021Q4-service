@@ -59,14 +59,15 @@ export class BoardController {
    * Otherwise, send 404 response.
    */
   async update(): Promise<void> {
-    const boardExists = !!(await this.boardService.getById(this.req.params.id));
+    const boardId: string = this.req.params.id;
+    const boardExists: boolean = !!(await this.boardService.getById(boardId));
 
     if (!boardExists) {
       this.res.code(404).send({ message: 'Not Found' });
       return;
     }
 
-    const board: Board = await this.boardService.update(this.req.params.id, this.req.body);
+    const board: Board = await this.boardService.update(boardId, this.req.body);
     this.res.code(200).send(board);
   }
 
@@ -75,14 +76,15 @@ export class BoardController {
    * Otherwise, send 404 response.
    */
   async remove(): Promise<void> {
-    const boardExists = !!(await this.boardService.getById(this.req.params.id));
+    const boardId: string = this.req.params.id;
+    const boardExists: boolean = !!(await this.boardService.getById(boardId));
 
     if (!boardExists) {
       this.res.code(404).send({ message: 'Not Found' });
       return;
     }
 
-    await this.boardService.remove(this.req.params.id);
+    await this.boardService.remove(boardId);
     this.res.code(204);
   }
 }
