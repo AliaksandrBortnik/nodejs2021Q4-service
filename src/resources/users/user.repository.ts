@@ -17,7 +17,7 @@ export class UserRepository {
   /**
    * Get user by id from DB
    * @param id - User's id
-   * @returns Returns promise of a user if found
+   * @returns Returns promise of a user if found or undefined
    */
   async getById(id: string): Promise<User | undefined> {
     return store.users.find(u => u.id === id);

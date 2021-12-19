@@ -1,21 +1,20 @@
 import {BoardRepository} from './board.repository';
-import {TaskRepository} from '../tasks/task.repository';
 import { Board } from "./board.model";
-import {Task} from "../tasks/task.model";
+import {TaskService} from "../tasks/task.service";
 
 /**
  * Board's business logic and work with Data Access Layer
  */
 export class BoardService {
   boardRepo: BoardRepository;
-  taskRepo: TaskRepository;
+  taskService: TaskService;
 
   /**
    * Constructor of BoardService class
    */
   constructor() {
     this.boardRepo = new BoardRepository();
-    this.taskRepo = new TaskRepository();
+    this.taskService = new TaskService();
   }
 
   /**
@@ -29,7 +28,7 @@ export class BoardService {
   /**
    * Get board by id
    * @param id - Board's id
-   * @returns Returns promise of a board if found
+   * @returns Returns promise of a board if found or undefined
    */
   async getById(id: string): Promise<Board | undefined> {
     return this.boardRepo.getById(id);
@@ -59,17 +58,7 @@ export class BoardService {
    * @param id - Board's id
    */
   async remove(id: string): Promise<void> {
-    const boardTasks: Task[] = await this.taskRepo.getAllByBoardId(id);
-    const tasksRemoveBatch: Promise<void>[] = [];
-
-    for (let i = 0; i < boardTasks.length; i += 1) {
-      tasksRemoveBatch.push(this.taskRepo.remove(boardTasks[i].id));
-    }
-
-    if (tasksRemoveBatch.length) {
-      await Promise.all(tasksRemoveBatch);
-    }
-
+    await this.taskService.eraseAllTasksOfBoard(id);
     await this.boardRepo.remove(id);
   }
 }

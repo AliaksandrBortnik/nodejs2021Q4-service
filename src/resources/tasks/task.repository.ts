@@ -20,27 +20,26 @@ export class TaskRepository {
    * @param boardId - Board's id
    * @returns Returns promise of all existing tasks of the board
    */
-  async getAllByBoardId(boardId: string) {
+  async getAllByBoardId(boardId: string): Promise<Task[]> {
     return store.tasks.filter(t => t.boardId === boardId);
   }
 
   /**
    * Get task by id from DB
    * @param id - Task's id
-   * @returns Returns promise of a task if found
+   * @returns Returns promise of a task if found or undefined
    */
-  async getById(id: string) {
+  async getById(id: string): Promise<Task | undefined> {
     return store.tasks.find(u => u.id === id);
   }
 
   /**
    * Add a new task to DB
-   * @param boardId - Board id
    * @param task - Task payload
    * @returns Returns promise of a new task
    */
-  async add(boardId: string, task: Task): Promise<Task> {
-    const entity: Task = { ...task, id: uuidv4(), boardId };
+  async add(task: Task): Promise<Task> {
+    const entity: Task = { ...task, id: uuidv4() };
     store.tasks.push(entity);
     return entity;
   }
@@ -52,7 +51,7 @@ export class TaskRepository {
    * @returns Returns promise of updated task
    */
   async update(id: string, task: Task): Promise<Task> {
-    const index = store.tasks.findIndex(u => u.id === id);
+    const index: number = store.tasks.findIndex(u => u.id === id);
     store.tasks[index] = { ...task, id };
     return store.tasks[index];
   }

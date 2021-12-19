@@ -17,7 +17,7 @@ export class BoardRepository {
   /**
    * Get board by id from DB
    * @param id - Board's id
-   * @returns Returns promise of a board if found
+   * @returns Returns promise of a board if found or undefined
    */
   async getById(id: string): Promise<Board | undefined> {
     return store.boards.find(u => u.id === id);

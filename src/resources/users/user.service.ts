@@ -28,7 +28,7 @@ export class UserService {
   /**
    * Get user by id
    * @param id - User's id
-   * @returns Returns promise of a user if found
+   * @returns Returns promise of a user if found or undefined
    */
   async getById(id: string): Promise<User | undefined> {
     return await this.userRepo.getById(id);

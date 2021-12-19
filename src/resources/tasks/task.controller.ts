@@ -37,9 +37,7 @@ export class TaskController {
    */
   async getById(): Promise<void> {
     const taskId: string = this.req.params.taskId;
-    const boardId: string = this.req.params.boardId;
-
-    const task: Task | undefined = await this.taskService.getById(boardId, taskId);
+    const task: Task | undefined = await this.taskService.getById(taskId);
 
     if (!task) {
       this.res.code(404).send({ message: 'Not Found' });
@@ -60,7 +58,7 @@ export class TaskController {
       return;
     }
 
-    const task: Task | undefined = await this.taskService.add(boardId, this.req.body);
+    const task: Task | undefined = await this.taskService.add({ ...this.req.body, boardId });
     this.res.status(201).send(task);
   }
 
@@ -77,7 +75,7 @@ export class TaskController {
       return;
     }
 
-    const taskExists = !!(await this.taskService.getById(boardId, taskId));
+    const taskExists = !!(await this.taskService.getById(taskId));
 
     if (!taskExists) {
       this.res.code(404).send({ message: 'Not Found' });
@@ -93,10 +91,9 @@ export class TaskController {
    * Otherwise, send 404 response.
    */
   async remove(): Promise<void> {
-    const boardId: string = this.req.params.boardId;
     const taskId: string = this.req.params.taskId;
 
-    const taskExists = !!(await this.taskService.getById(boardId, taskId));
+    const taskExists = !!(await this.taskService.getById(taskId));
 
     if (!taskExists) {
       this.res.code(404).send({ message: 'Not Found' });

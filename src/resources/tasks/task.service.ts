@@ -25,22 +25,20 @@ export class TaskService {
 
   /**
    * Get task by id
-   * @param boardId - Board's id
    * @param id - Task's id
-   * @returns Returns promise of a task if found
+   * @returns Returns promise of a task if found or undefined
    */
-  async getById(boardId: string, id: string): Promise<Task | undefined> {
+  async getById(id: string): Promise<Task | undefined> {
     return this.taskRepo.getById(id);
   }
 
   /**
    * Add a new task
-   * @param boardId - Board's id
    * @param task - Task payload
    * @returns Returns promise of a new task
    */
-  async add(boardId: string, task: Task): Promise<Task> {
-    return this.taskRepo.add(boardId, task);
+  async add(task: Task): Promise<Task> {
+    return this.taskRepo.add(task);
   }
 
   /**
@@ -78,6 +76,24 @@ export class TaskService {
 
     if (tasksUpdateBatch.length) {
       await Promise.all(tasksUpdateBatch);
+    }
+  }
+
+  /**
+   * Remove all tasks currently existing on the board
+   * @param boardId - Board id from which tasks should be dropped
+   */
+  async eraseAllTasksOfBoard(boardId: string): Promise<void> {
+    const boardTasks: Task[] = await this.taskRepo.getAllByBoardId(boardId);
+
+    const tasksRemoveBatch: Promise<void>[] = [];
+
+    for (let i = 0; i < boardTasks.length; i += 1) {
+      tasksRemoveBatch.push(this.taskRepo.remove(boardTasks[i].id));
+    }
+
+    if (tasksRemoveBatch.length) {
+      await Promise.all(tasksRemoveBatch);
     }
   }
 }
