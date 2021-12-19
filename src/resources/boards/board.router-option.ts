@@ -19,7 +19,7 @@ export const boardRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+    handler: (req: BoardFastifyRequest, res: FastifyReply): Promise<void> =>
       new BoardController(req, res).getAll()
   },
   getById: {
@@ -36,7 +36,7 @@ export const boardRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+    handler: (req: BoardFastifyRequest, res: FastifyReply): Promise<void> =>
       new BoardController(req, res).getById()
   },
   add: {
@@ -61,7 +61,7 @@ export const boardRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+    handler: (req: BoardFastifyRequest, res: FastifyReply): Promise<void> =>
       new BoardController(req, res).add()
   },
   update: {
@@ -89,7 +89,7 @@ export const boardRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+    handler: (req: BoardFastifyRequest, res: FastifyReply): Promise<void> =>
       new BoardController(req, res).update()
   },
   remove: {
@@ -109,7 +109,7 @@ export const boardRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: BoardFastifyRequest, res: FastifyReply) =>
+    handler: (req: BoardFastifyRequest, res: FastifyReply): Promise<void> =>
       new BoardController(req, res).remove()
   }
 };

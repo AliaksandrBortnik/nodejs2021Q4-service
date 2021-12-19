@@ -18,7 +18,7 @@ export const userRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+    handler: (req: UserFastifyRequest, res: FastifyReply): Promise<void> =>
       new UserController(req, res).getAll()
   },
   getById: {
@@ -35,7 +35,7 @@ export const userRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+    handler: (req: UserFastifyRequest, res: FastifyReply): Promise<void> =>
       new UserController(req, res).getById()
   },
   add: {
@@ -58,7 +58,7 @@ export const userRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+    handler: (req: UserFastifyRequest, res: FastifyReply): Promise<void> =>
       new UserController(req, res).add()
   },
   update: {
@@ -84,7 +84,7 @@ export const userRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+    handler: (req: UserFastifyRequest, res: FastifyReply): Promise<void> =>
       new UserController(req, res).update()
   },
   remove: {
@@ -104,7 +104,7 @@ export const userRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: UserFastifyRequest, res: FastifyReply) =>
+    handler: (req: UserFastifyRequest, res: FastifyReply): Promise<void> =>
       new UserController(req, res).remove()
   }
 };

@@ -49,7 +49,7 @@ export class UserService {
    * @param user - User's payload
    * @returns Returns promise of updated user
    */
-  async update(id: string, user: User) {
+  async update(id: string, user: User): Promise<User> {
     return this.userRepo.update(id, user);
   }
 

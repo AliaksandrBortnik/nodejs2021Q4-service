@@ -21,7 +21,7 @@ export const taskRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: TaskFastifyRequest, res: FastifyReply) =>
+    handler: (req: TaskFastifyRequest, res: FastifyReply): Promise<void> =>
       new TaskController(req, res).getAllByBoardId()
   },
   getById: {
@@ -39,7 +39,7 @@ export const taskRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: TaskFastifyRequest, res: FastifyReply) =>
+    handler: (req: TaskFastifyRequest, res: FastifyReply): Promise<void> =>
       new TaskController(req, res).getById()
   },
   add: {
@@ -68,7 +68,7 @@ export const taskRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: TaskFastifyRequest, res: FastifyReply) =>
+    handler: (req: TaskFastifyRequest, res: FastifyReply): Promise<void> =>
       new TaskController(req, res).add()
   },
   update: {
@@ -98,7 +98,7 @@ export const taskRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: TaskFastifyRequest, res: FastifyReply) =>
+    handler: (req: TaskFastifyRequest, res: FastifyReply): Promise<void> =>
       new TaskController(req, res).update()
   },
   remove: {
@@ -119,7 +119,7 @@ export const taskRouterOption = {
      * @param req - request object
      * @param res - response object
      */
-    handler: (req: TaskFastifyRequest, res: FastifyReply) =>
+    handler: (req: TaskFastifyRequest, res: FastifyReply): Promise<void> =>
       new TaskController(req, res).remove()
   }
 };
