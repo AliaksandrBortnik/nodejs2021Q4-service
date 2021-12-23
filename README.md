@@ -15,3 +15,16 @@ TS documentation is available in `/docs/index.html`.
 7. If you want to run unit tests, start an app in one terminal, and open another terminal where `npm run test`.
 
 8. To check lint, use `npm run lint`.
+
+## Logging & error handling
+Log is available in `/logs/all.txt`, `/logs/error.txt` and also `console`.
+To change logging level, go to `.env` and replace the value of `LOG_LEVEL`.
+
+You can use one of:
+- silent (no logs)
+- fatal
+- error
+- warn
+- info
+- debug
+- trace (includes all possible logs)
