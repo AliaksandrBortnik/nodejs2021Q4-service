@@ -53,7 +53,7 @@ const serializers = {
   },
 };
 
-const logger: Logger = pino({ level: 'trace', serializers }, options);
+const logger: Logger = pino({ level: config.LOG_LEVEL, serializers }, options);
 const app: FastifyInstance = fastify({ logger });
 
 app.register(userRouter);
