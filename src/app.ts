@@ -43,7 +43,7 @@ const serializers = {
       url: request.url,
       query: request.query,
       parameters: request.params,
-      body: request.body // TODO: Fix it. It doesn't work
+      // request.body is parsed and logged via a fastify hook separately
     };
   },
   res(reply: FastifyReply) {
