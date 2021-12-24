@@ -29,7 +29,7 @@ app.setErrorHandler(async (error: FastifyError, request, reply) => {
  */
 app.addHook('preHandler', async (req) => {
   if (req.body) {
-    req.log.info({ body: req.body }, 'Parsed body')
+    req.log.info({ body: req.body }, 'parsed response body')
   }
 })
 

@@ -4,8 +4,9 @@ Note: If a function returns `void` or `Promise<void>`, no need to specific expli
 
 TS documentation is available in `/docs/index.html`.
 
+## Setup steps
 1. git clone https://github.com/AliaksandrBortnik/nodejs2021Q4-service/pull/2
-2. Switch to `task5-ts`.
+2. Switch to `logging` branch.
 3. Change directory `cd nodejs2021Q4-service`.
 4. Install dependencies `npm i`.
 
