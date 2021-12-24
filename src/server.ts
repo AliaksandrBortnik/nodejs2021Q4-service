@@ -1,18 +1,26 @@
 import app from './app';
 import config from './common/config';
 import {FastifyError} from "fastify";
+import {StatusCodes} from "http-status-codes";
 
 const PORT: string = config.PORT || '4000';
 
 app.listen(PORT).catch((error: unknown) => {
   if (error instanceof Error) {
     app.log.fatal(error.message);
+    process.exit(1);
   }
 });
 
-app.setErrorHandler((error: FastifyError, request, reply) => {
+app.setErrorHandler(async (error: FastifyError, request, reply) => {
+  if (error.validation && error.validation.length) {
+    app.log.info(error.message);
+    reply.status(StatusCodes.BAD_REQUEST).send(error.message);
+    return;
+  }
+
   app.log.error(error.message);
-  reply.status(500).send(error.message);
+  reply.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
 });
 
 /*
@@ -34,7 +42,3 @@ process.on('unhandledRejection', (error: Error) => {
   app.log.fatal(error.message);
   process.exit(1);
 });
-
-// TODO: remove
-//throw new Error('Ooops');
-// Promise.reject(new Error('Ops, rejected'));
