@@ -18,6 +18,8 @@ TS documentation is available in `/docs/index.html`.
 8. To check lint, use `npm run lint`.
 
 ## Logging & error handling
+Keep in mind, a logger is encapsulated into a separate module `logger.ts` and injected into the fastify instance in `app.ts`. To track logs, it uses abstract logger interface of the fastify instance, e.g. `app.log.info(msg)` and so on. So we can replace the injected logger instance easily without need to change logging logic.
+
 Log is available in `/logs/all.txt`, `/logs/error.txt` and also `console`.
 To change logging level, go to `.env` and replace the value of `LOG_LEVEL`.
 
