@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    "target": "es6",
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop" : true, // Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility.
+  }
+}
