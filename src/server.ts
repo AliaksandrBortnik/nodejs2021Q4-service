@@ -1,6 +1,6 @@
 import app from './app';
 import config from './common/config';
-import {FastifyError} from "fastify";
+import {FastifyError, FastifyReply, FastifyRequest} from "fastify";
 import {StatusCodes} from "http-status-codes";
 
 const PORT: string = config.PORT || '4000';
@@ -12,7 +12,7 @@ app.listen(PORT).catch((error: unknown) => {
   }
 });
 
-app.setErrorHandler(async (error: FastifyError, request, reply) => {
+app.setErrorHandler(async (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
   if (error.validation && error.validation.length) {
     app.log.info(error.message);
     reply.status(StatusCodes.BAD_REQUEST).send(error.message);
@@ -27,7 +27,7 @@ app.setErrorHandler(async (error: FastifyError, request, reply) => {
  * The body cannot be serialized inside a req method because the request is serialized when Fastify creates the child logger.
  * At that time, the body is not yet parsed. Hence, need to use hook.
  */
-app.addHook('preHandler', async (req) => {
+app.addHook('preHandler', async (req: FastifyRequest) => {
   if (req.body) {
     req.log.info({ body: req.body }, 'parsed request body')
   }
