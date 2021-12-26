@@ -1,8 +1,8 @@
-import {Logger, TransportMultiOptions, pino} from 'pino';
+import {LoggerOptions, Logger, TransportMultiOptions, pino} from 'pino';
 import {FastifyReply, FastifyRequest} from "fastify";
 import config from "./common/config";
 
-const options = pino.transport(<TransportMultiOptions>{
+const transport = <TransportMultiOptions>{
   targets: [
     {
       target: 'pino-pretty',
@@ -20,7 +20,7 @@ const options = pino.transport(<TransportMultiOptions>{
       options: { destination: './logs/all.txt', mkdir: true }
     }
   ]
-});
+};
 
 const serializers = {
   req(request: FastifyRequest) {
@@ -39,4 +39,10 @@ const serializers = {
   },
 };
 
-export const logger: Logger = pino({ level: config.LOG_LEVEL, serializers }, options);
+const options: LoggerOptions = {
+  transport,
+  serializers,
+  level: config.LOG_LEVEL, // Override default logger info level to support any level in transport
+};
+
+export const logger: Logger = pino(options);
