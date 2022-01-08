@@ -2,6 +2,7 @@ import {TaskService} from './task.service';
 import {FastifyReply} from 'fastify';
 import { Task } from "./task.model";
 import {TaskFastifyRequest} from "./task.request";
+import {StatusCodes} from "http-status-codes";
 
 /**
  * Class to handle all Task's requests
@@ -28,7 +29,7 @@ export class TaskController {
   async getAllByBoardId(): Promise<void> {
     const boardId: string = this.req.params.boardId;
     const tasks: Task[] = await this.taskService.getAllByBoardId(boardId);
-    this.res.code(200).send(tasks);
+    this.res.code(StatusCodes.OK).send(tasks);
   }
 
   /**
@@ -40,11 +41,11 @@ export class TaskController {
     const task: Task | undefined = await this.taskService.getById(taskId);
 
     if (!task) {
-      this.res.code(404).send({ message: 'Not Found' });
+      this.res.code(StatusCodes.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
-    this.res.code(200).send(task);
+    this.res.code(StatusCodes.OK).send(task);
   }
 
   /**
@@ -54,12 +55,12 @@ export class TaskController {
     const boardId: string = this.req.params.boardId;
 
     if (boardId !== this.req.body.boardId && this.req.body.boardId !== null) {
-      this.res.code(400).send({ message: 'Mismatch of boardId' });
+      this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
       return;
     }
 
     const task: Task | undefined = await this.taskService.add({ ...this.req.body, boardId });
-    this.res.status(201).send(task);
+    this.res.status(StatusCodes.CREATED).send(task);
   }
 
   /**
@@ -71,19 +72,19 @@ export class TaskController {
     const taskId: string = this.req.params.taskId;
 
     if (boardId !== this.req.body.boardId && this.req.body.boardId !== null) {
-      this.res.code(400).send({ message: 'Mismatch of boardId' });
+      this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
       return;
     }
 
     const taskExists = !!(await this.taskService.getById(taskId));
 
     if (!taskExists) {
-      this.res.code(404).send({ message: 'Not Found' });
+      this.res.code(StatusCodes.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
     const task: Task = await this.taskService.update(taskId, this.req.body);
-    this.res.code(200).send(task);
+    this.res.code(StatusCodes.OK).send(task);
   }
 
   /**
@@ -96,11 +97,11 @@ export class TaskController {
     const taskExists = !!(await this.taskService.getById(taskId));
 
     if (!taskExists) {
-      this.res.code(404).send({ message: 'Not Found' });
+      this.res.code(StatusCodes.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
     await this.taskService.remove(taskId);
-    this.res.code(204);
+    this.res.code(StatusCodes.NO_CONTENT);
   }
 }

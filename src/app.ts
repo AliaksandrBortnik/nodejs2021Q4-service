@@ -5,14 +5,14 @@ import {
   FastifyInstance,
   FastifyPluginCallback,
   FastifyPluginOptions,
-  FastifyRegisterOptions,
-  FastifyServerOptions
+  FastifyRegisterOptions
 } from 'fastify';
 import {userRouter} from './resources/users/user.router';
 import {boardRouter} from './resources/boards/board.router';
 import {taskRouter} from './resources/tasks/task.router';
+import {logger} from "./logger";
 
-const app: FastifyInstance = fastify({ logger: true } as FastifyServerOptions);
+const app: FastifyInstance = fastify({ logger });
 
 app.register(userRouter);
 app.register(boardRouter);

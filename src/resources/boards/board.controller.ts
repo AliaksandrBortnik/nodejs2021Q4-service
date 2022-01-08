@@ -2,6 +2,7 @@ import {BoardService} from './board.service';
 import {Board} from "./board.model";
 import {FastifyReply} from "fastify";
 import {BoardFastifyRequest} from "./board.request";
+import {StatusCodes} from "http-status-codes";
 
 /**
  * Class to handle all Board's requests
@@ -27,7 +28,7 @@ export class BoardController {
    */
   async getAll(): Promise<void> {
     const boards: Board[] = await this.boardService.getAll();
-    this.res.code(200).send(boards);
+    this.res.code(StatusCodes.OK).send(boards);
   }
 
   /**
@@ -39,11 +40,11 @@ export class BoardController {
     const board: Board | undefined = await this.boardService.getById(boardId);
 
     if (!board) {
-      this.res.code(404).send({ message: 'Not Found' });
+      this.res.code(StatusCodes.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
-    this.res.code(200).send(board);
+    this.res.code(StatusCodes.OK).send(board);
   }
 
   /**
@@ -51,7 +52,7 @@ export class BoardController {
    */
   async add(): Promise<void> {
     const board: Board = await this.boardService.add(this.req.body);
-    this.res.status(201).send(board);
+    this.res.status(StatusCodes.CREATED).send(board);
   }
 
   /**
@@ -63,12 +64,12 @@ export class BoardController {
     const boardExists = !!(await this.boardService.getById(boardId));
 
     if (!boardExists) {
-      this.res.code(404).send({ message: 'Not Found' });
+      this.res.code(StatusCodes.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
     const board: Board = await this.boardService.update(boardId, this.req.body);
-    this.res.code(200).send(board);
+    this.res.code(StatusCodes.OK).send(board);
   }
 
   /**
@@ -80,11 +81,11 @@ export class BoardController {
     const boardExists = !!(await this.boardService.getById(boardId));
 
     if (!boardExists) {
-      this.res.code(404).send({ message: 'Not Found' });
+      this.res.code(StatusCodes.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
     await this.boardService.remove(boardId);
-    this.res.code(204);
+    this.res.code(StatusCodes.NO_CONTENT);
   }
 }
