@@ -5,7 +5,7 @@ import {StatusCodes} from "http-status-codes";
 
 const PORT: string = config.PORT || '4000';
 
-app.listen(PORT).catch((error: unknown) => {
+app.listen(PORT, '0.0.0.0').catch((error: unknown) => {
   if (error instanceof Error) {
     app.log.fatal(error.message);
     process.exit(1);
