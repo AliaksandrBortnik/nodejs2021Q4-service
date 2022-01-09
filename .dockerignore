@@ -1,0 +1,12 @@
+logs
+docs
+PGDATA
+node_modules
+.dockerignore
+.gitignore
+docker-compose.yml
+Dockerfile
+.github
+.idea
+.vscode
+node_modules
