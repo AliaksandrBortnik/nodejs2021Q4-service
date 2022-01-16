@@ -17,15 +17,18 @@ export class Task {
   @Column()
   description!: string;
 
-  @ManyToOne(() => User, user => user.tasks, { nullable: true })
+  @ManyToOne(() => User, user => user.tasks, { eager: true, nullable: true, onDelete: 'SET NULL' })
   @JoinColumn()
   user!: User;
+  userId!: string;
 
-  @ManyToOne(() => Board, board => board.tasks)
+  @ManyToOne(() => Board, board => board.tasks, { eager: true})
   @JoinColumn()
   board!: Board;
+  boardId!: string;
 
-  @ManyToOne(() => BoardColumn, column => column.tasks)
+  @ManyToOne(() => BoardColumn, column => column.tasks, { eager: true, nullable: true })
   @JoinColumn()
   column!: BoardColumn;
+  columnId!: string;
 }

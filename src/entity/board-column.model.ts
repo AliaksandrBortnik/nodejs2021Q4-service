@@ -1,10 +1,10 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {Board} from "./board.model";
 import {Task} from "./task.model";
 
 @Entity({ name: 'column'})
 export class BoardColumn {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column()
@@ -13,7 +13,7 @@ export class BoardColumn {
   @Column()
   order!: number;
 
-  @ManyToOne(() => Board, board => board.columns)
+  @ManyToOne(() => Board, board => board.columns, { onDelete: "CASCADE"})
   @JoinColumn()
   board!: Board;
 

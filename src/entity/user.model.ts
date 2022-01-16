@@ -1,9 +1,9 @@
-import {Column, Entity, OneToMany, PrimaryColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Task} from "./task.model";
 
 @Entity()
 export class User {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column()
@@ -15,6 +15,6 @@ export class User {
   @Column()
   password!: string;
 
-  @OneToMany(() => Task, task => task.user)
+  @OneToMany(() => Task, task => task.user, { onDelete: "SET NULL" })
   tasks!: Task[];
 }

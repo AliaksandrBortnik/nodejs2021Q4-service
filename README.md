@@ -25,6 +25,9 @@ Current main image is 291MB.
 2. To start containers, run in the terminal the following: `docker-compose up --build`
 3. When containers are running, check their network - `docker network inspect rss-main-net`. Both containers are part of it.
 
+## Database and migrations
+TBD
+
 ## Logging & error handling
 Keep in mind, a logger is encapsulated into a separate module `logger.ts` and injected into the fastify instance in `app.ts`. To track logs, it uses abstract logger interface of the fastify instance, e.g. `app.log.info(msg)` and so on. So we can replace the injected logger instance easily without need to change logging logic.
 

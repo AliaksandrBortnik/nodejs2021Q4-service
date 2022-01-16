@@ -1,6 +1,6 @@
 import {TaskService} from './task.service';
 import {FastifyReply} from 'fastify';
-import { Task } from "./task.model";
+import { Task } from "../../entity/task.model";
 import {TaskFastifyRequest} from "./task.request";
 import {StatusCodes} from "http-status-codes";
 
@@ -54,12 +54,14 @@ export class TaskController {
   async add(): Promise<void> {
     const boardId: string = this.req.params.boardId;
 
-    if (boardId !== this.req.body.boardId && this.req.body.boardId !== null) {
-      this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
-      return;
-    }
+    // if (boardId !== this.req.body.board.id && this.req.body.board.id !== null) {
+    //   this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
+    //   return;
+    // }
 
-    const task: Task | undefined = await this.taskService.add({ ...this.req.body, boardId });
+    // TODO: make sure boardId is added from params
+    const task: Task | undefined = await this.taskService.add({ ...this.req.body });
+    // const task: Task | undefined = await this.taskService.add({ ...this.req.body, boardId });
     this.res.status(StatusCodes.CREATED).send(task);
   }
 
@@ -71,7 +73,7 @@ export class TaskController {
     const boardId: string = this.req.params.boardId;
     const taskId: string = this.req.params.taskId;
 
-    if (boardId !== this.req.body.boardId && this.req.body.boardId !== null) {
+    if (boardId !== this.req.body.board.id && this.req.body.board.id !== null) {
       this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
       return;
     }

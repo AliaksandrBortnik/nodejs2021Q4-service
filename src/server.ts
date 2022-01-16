@@ -32,7 +32,7 @@ app.setErrorHandler(async (error: FastifyError, request: FastifyRequest, reply: 
     return;
   }
 
-  app.log.error(error.message);
+  app.log.error('setErrorHandler' + error.message);
   reply.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
 });
 
@@ -47,11 +47,11 @@ app.addHook('preHandler', async (req: FastifyRequest) => {
 })
 
 process.on('uncaughtException', (error: Error) => {
-  app.log.fatal(error.message);
+  app.log.fatal('uncaughtException' + error.message);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (error: Error) => {
-  app.log.fatal(error.message);
+  app.log.fatal('unhandledRejection' + error.message);
   process.exit(1);
 });

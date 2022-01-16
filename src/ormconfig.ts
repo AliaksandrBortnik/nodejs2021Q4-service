@@ -8,7 +8,7 @@ export const dbConnectionOptions: ConnectionOptions = {
   username: config.POSTGRES_USER,
   password: config.POSTGRES_PASSWORD,
   database: config.POSTGRES_DB,
-  logging: false,
+  logging: true,
   entities: ["src/entity/**/*.ts"],
   synchronize: true,
   // migrations: ["src/migration/**/*.ts"],
