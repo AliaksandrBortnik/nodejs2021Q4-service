@@ -3,5 +3,5 @@ WORKDIR /app
 # Copy everything to workdir except what is in .dockerignore
 COPY . .
 # Install dependencies
-RUN npm install && npm cache clean --force
+RUN npm install
 CMD ["npm", "start"]
