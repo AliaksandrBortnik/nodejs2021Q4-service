@@ -6,20 +6,14 @@ dotenv.config({
   path: path.join(__dirname, '../../.env')
 });
 
-const config: Config = {
+export const config = {
   PORT: process.env.PORT,
   NODE_ENV: process.env.NODE_ENV,
   LOG_LEVEL: process.env.LOG_LEVEL,
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
-  AUTH_MODE: process.env.AUTH_MODE === 'true'
+  AUTH_MODE: process.env.AUTH_MODE === 'true',
+  POSTGRES_PORT: process.env.POSTGRES_PORT,
+  POSTGRES_DB: process.env.POSTGRES_DB,
+  POSTGRES_USER: process.env.POSTGRES_USER,
+  POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD
 };
-
-export interface Config {
-  PORT: string | undefined,
-  NODE_ENV: string | undefined,
-  LOG_LEVEL: string | undefined,
-  JWT_SECRET_KEY: string | undefined,
-  AUTH_MODE: boolean
-}
-
-export default config;
