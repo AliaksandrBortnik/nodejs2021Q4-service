@@ -1,6 +1,6 @@
 import { FastifyReply } from "fastify";
 import { UserService } from "./user.service";
-import { User } from "./user.model";
+import { User } from "../../entity/user.model";
 import {UserFastifyRequest} from "./user.request";
 import {StatusCodes} from "http-status-codes";
 

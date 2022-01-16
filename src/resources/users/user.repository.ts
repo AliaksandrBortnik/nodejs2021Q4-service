@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import {store} from '../../store';
-import { User } from "./user.model";
+import { User } from "../../entity/user.model";
 
 /**
  * User's repository to work with DB

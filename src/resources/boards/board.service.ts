@@ -1,5 +1,5 @@
 import {BoardRepository} from './board.repository';
-import { Board } from "./board.model";
+import { Board } from "../../entity/board.model";
 import {TaskService} from "../tasks/task.service";
 
 /**

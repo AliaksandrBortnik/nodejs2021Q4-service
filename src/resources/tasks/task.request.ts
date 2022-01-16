@@ -1,5 +1,5 @@
 import {FastifyRequest} from "fastify";
-import {Task} from "./task.model";
+import {Task} from "../../entity/task.model";
 
 export type TaskFastifyRequest = FastifyRequest<{
   Params: {

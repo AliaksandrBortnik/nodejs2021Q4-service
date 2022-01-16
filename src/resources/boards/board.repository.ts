@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 import {store} from '../../store';
-import {Board} from "./board.model";
+import {Board} from "../../entity/board.model";
 
 /**
  * Board's repository to work with DB

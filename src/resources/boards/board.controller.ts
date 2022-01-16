@@ -1,5 +1,5 @@
 import {BoardService} from './board.service';
-import {Board} from "./board.model";
+import {Board} from "../../entity/board.model";
 import {FastifyReply} from "fastify";
 import {BoardFastifyRequest} from "./board.request";
 import {StatusCodes} from "http-status-codes";

@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from "../../entity/user.model";
 import { UserRepository } from './user.repository';
 import { TaskService } from '../tasks/task.service';
 
