@@ -11,6 +11,8 @@
     "doc": "typedoc",
     "build": "tsc --project tsconfig.json",
     "start": "nodemon src/server.ts --legacy-watch --exitcrash",
+    "migration:generate": "npx typeorm migration:generate --config ./src/ormconfig.ts --connection -n",
+    "migration:run": "npx typeorm -- migration:run",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
@@ -46,7 +48,10 @@
     "fastify": "^3.24.1",
     "fastify-swagger": "^4.12.6",
     "http-status-codes": "^2.1.4",
+    "pg": "^8.7.1",
     "pino": "^7.6.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.41",
     "uuid": "8.3.2",
     "yamljs": "0.3.0"
   },
