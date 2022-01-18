@@ -17,18 +17,21 @@ export class Task {
   @Column()
   description!: string;
 
-  @ManyToOne(() => User, user => user.tasks, { eager: true, nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn()
-  user!: User;
+  @Column({ nullable: true })
   userId!: string;
+  @ManyToOne(() => User, user => user.tasks, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'userId' })
+  user!: User;
 
-  @ManyToOne(() => Board, board => board.tasks, { eager: true})
-  @JoinColumn()
-  board!: Board;
+  @Column({ nullable: true })
   boardId!: string;
+  @ManyToOne(() => Board, board => board.tasks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'boardId' })
+  board!: Board;
 
-  @ManyToOne(() => BoardColumn, column => column.tasks, { eager: true, nullable: true })
-  @JoinColumn()
-  column!: BoardColumn;
+  @Column({ nullable: true })
   columnId!: string;
+  @ManyToOne(() => BoardColumn, column => column.tasks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'columnId' })
+  column!: BoardColumn;
 }

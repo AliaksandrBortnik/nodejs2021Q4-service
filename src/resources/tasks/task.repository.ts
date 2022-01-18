@@ -7,20 +7,11 @@ import {EntityRepository, Repository} from "typeorm";
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
   /**
-   * Get all tasks by userId from DB
-   * @param userId - User's id
-   * @returns Returns promise of all existing tasks of the user
-   */
-  async getAllByUserId(userId: string): Promise<Task[]> {
-    return this.find({ where: { user: { id: userId } }});
-  }
-
-  /**
    * Get all tasks by boardId from DB
    * @param boardId - Board's id
    * @returns Returns promise of all existing tasks of the board
    */
   async getAllByBoardId(boardId: string): Promise<Task[]> {
-    return this.find({ where: { board: {id: boardId }}});
+    return this.find({ where: { board: { id: boardId }}});
   }
 }

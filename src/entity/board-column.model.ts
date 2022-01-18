@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Board} from "./board.model";
 import {Task} from "./task.model";
 
@@ -13,10 +13,12 @@ export class BoardColumn {
   @Column()
   order!: number;
 
-  @ManyToOne(() => Board, board => board.columns, { onDelete: "CASCADE"})
-  @JoinColumn()
+  @Column({ nullable: true })
+  boardId?: string;
+  @ManyToOne(() => Board, board => board.columns, { onDelete: "CASCADE" })
+  @JoinColumn({ name: 'boardId' })
   board!: Board;
 
-  @OneToMany(() => Task, task => task.column)
+  // @OneToMany(() => Task, task => task.column, { onDelete: "CASCADE" })
   tasks!: Task[];
 }

@@ -51,7 +51,7 @@ export class UserController {
    * Add a user and send the created user as a response with 201 status.
    */
   async add(): Promise<void> {
-    const user: User = await this.userService.add(this.req.body);
+    const user: User = await this.userService.addOrUpdate(this.req.body);
     this.res.status(StatusCodes.CREATED).send(user);
   }
 
@@ -68,7 +68,12 @@ export class UserController {
       return;
     }
 
-    const user: User = await this.userService.update(userId, this.req.body);
+    if (userId !== this.req.body.id && this.req.body.id !== null) {
+      this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of id' });
+      return;
+    }
+
+    const user: User = await this.userService.addOrUpdate(this.req.body);
     this.res.code(StatusCodes.OK).send(user);
   }
 

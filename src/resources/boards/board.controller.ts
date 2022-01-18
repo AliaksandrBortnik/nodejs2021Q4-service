@@ -51,7 +51,7 @@ export class BoardController {
    * Add a board and send the created board as a response with 201 status.
    */
   async add(): Promise<void> {
-    const board: Board = await this.boardService.add(this.req.body);
+    const board: Board = await this.boardService.addOrUpdate(this.req.body);
     this.res.status(StatusCodes.CREATED).send(board);
   }
 
@@ -68,7 +68,12 @@ export class BoardController {
       return;
     }
 
-    const board: Board = await this.boardService.update(boardId, this.req.body);
+    if (boardId !== this.req.body.id && this.req.body.id !== null) {
+      this.res.code(StatusCodes.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
+      return;
+    }
+
+    const board: Board = await this.boardService.addOrUpdate(this.req.body);
     this.res.code(StatusCodes.OK).send(board);
   }
 
