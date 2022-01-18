@@ -3,7 +3,7 @@ import {ConnectionOptions} from "typeorm";
 
 export const dbConnectionOptions: ConnectionOptions = {
   type: "postgres",
-  host: "rss-db", // "localhost"
+  host: config.POSTGRES_HOST,
   port: +config.POSTGRES_PORT!,
   username: config.POSTGRES_USER,
   password: config.POSTGRES_PASSWORD,
