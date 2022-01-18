@@ -10,9 +10,9 @@ export class Board {
   @Column()
   title!: string;
 
-  @OneToMany(() => BoardColumn, column => column.board, { onDelete: 'CASCADE', cascade: ['insert', 'remove'], eager: true })
+  @OneToMany(() => BoardColumn, column => column.board, { cascade: true })
   columns!: BoardColumn[];
 
-  // @OneToMany(() => Task, task => task.board)
+  @OneToMany(() => Task, task => task.board)
   tasks!: Task[];
 }

@@ -19,6 +19,6 @@ export class BoardColumn {
   @JoinColumn({ name: 'boardId' })
   board!: Board;
 
-  // @OneToMany(() => Task, task => task.column, { onDelete: "CASCADE" })
+  @OneToMany(() => Task, task => task.column)
   tasks!: Task[];
 }

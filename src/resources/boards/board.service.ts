@@ -23,7 +23,13 @@ export class BoardService {
    * @returns Returns promise of all existing boards
    */
   async getAll(): Promise<Board[]> {
-    return this.boardRepo.find();
+    // There is a lack of vital feature using eager loading: https://github.com/typeorm/typeorm/issues/2620
+    // return this.boardRepo.find();
+    return this.boardRepo
+      .createQueryBuilder("board")
+      .leftJoinAndSelect("board.columns", "columns")
+      .orderBy({ "columns.order": "ASC" })
+      .getMany();
   }
 
   /**
@@ -32,7 +38,14 @@ export class BoardService {
    * @returns Returns promise of a board if found or undefined
    */
   async getById(id: string): Promise<Board | undefined> {
-    return this.boardRepo.findOne(id);
+    // There is a lack of vital feature using eager loading: https://github.com/typeorm/typeorm/issues/2620
+    // return this.boardRepo.findOne(id);
+    return this.boardRepo
+      .createQueryBuilder("board")
+      .where("board.id = :id", { id })
+      .leftJoinAndSelect("board.columns", "columns")
+      .orderBy({ "columns.order": "ASC" })
+      .getOne();
   }
 
   /**
