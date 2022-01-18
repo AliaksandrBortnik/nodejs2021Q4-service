@@ -3,27 +3,21 @@ import {config} from './common/config';
 import {FastifyError, FastifyReply, FastifyRequest} from "fastify";
 import {StatusCodes} from "http-status-codes";
 import {createConnection} from "typeorm";
-import {dbConnectionOptions} from "./ormconfig";
 
 const PORT: string = config.PORT || '4000';
 
-async function initDbConnection() {
-  await createConnection(dbConnectionOptions);
-}
-
 async function init() {
-  await initDbConnection();
+  await createConnection();
 }
 
-init()
-  .then(() => {
-    app.listen(PORT, '0.0.0.0').catch((error: unknown) => {
-      if (error instanceof Error) {
-        app.log.fatal(error.message);
-        process.exit(1);
-      }
-    });
+init().then(() => {
+  app.listen(PORT, '0.0.0.0').catch((error: unknown) => {
+    if (error instanceof Error) {
+      app.log.fatal(error.message);
+      process.exit(1);
+    }
   });
+});
 
 app.setErrorHandler(async (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
   if (error.validation && error.validation.length) {
