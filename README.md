@@ -1,7 +1,5 @@
 # REST service
 
-Note: If a function returns `void` or `Promise<void>`, no need to specific explicit @returns for TSDoc. Doc generator will infer types itself.
-
 TS documentation is available in `/docs/index.html`.
 
 ## Setup steps
