@@ -29,7 +29,7 @@ Current main image is 291MB.
 All available migrations are already generated and stored.
 Keep in mind, migrations are applied automatically on application start-up. See `TYPEORM_MIGRATIONS_RUN` setting in .env file.
 
-1. To generate migration, change host to `localhost` in .env and start docker containers and execute `docker exec -it rss-service npm run migration:generate`.
+1. To generate migration, start docker containers and execute `docker exec -it rss-service npm run migration:generate`.
 2. To run migrations, execute `docker exec -it rss-service npm run migration:run`.
 
 ## Logging & error handling
