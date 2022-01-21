@@ -8,14 +8,15 @@
   "description": "REST service",
   "main": "src/server.ts",
   "scripts": {
-    "doc": "typedoc",
-    "build": "tsc --project tsconfig.json",
+    "docker:start": "docker compose up --build",
+    "docker:stop": "docker compose down",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -n initial -p",
+    "migration:run": "ts-node ./node_modules/typeorm/cli migration:run",
     "start": "nodemon src/server.ts --legacy-watch --exitcrash",
-    "migration:generate": "npx typeorm migration:generate --config ./src/ormconfig.ts --connection -n",
-    "migration:run": "npx typeorm -- migration:run",
+    "build": "tsc --project tsconfig.json",
+    "doc": "typedoc",
     "lint": "eslint --ext .js,.ts --fix src/",
-    "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
-    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
+    "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand"
   },
   "keywords": [
     "nodejs",

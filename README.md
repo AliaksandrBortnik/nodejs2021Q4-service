@@ -21,12 +21,16 @@ TS documentation is available in `/docs/index.html`.
 
 Current main image is 291MB.
 
-1. Clean up: `docker-compose down --volumes`.
-2. To start containers, run in the terminal the following: `docker-compose up --build`
-3. When containers are running, check their network - `docker network inspect rss-main-net`. Both containers are part of it.
+1. To start containers, run in the terminal the following: `npm run docker:start` or `docker-compose up --build`.
+2. Basic containers shutdown: `npm run docker:stop`.
+3. Shutdown and clean up of volumes: `docker-compose down --volumes`.
 
 ## Database and migrations
-TBD
+All available migrations are already generated and stored.
+Keep in mind, migrations are applied automatically on application start-up. See `TYPEORM_MIGRATIONS_RUN` setting in .env file.
+
+1. To generate migration, change host to `localhost` in .env and start docker containers and execute `docker exec -it rss-service npm run migration:generate`.
+2. To run migrations, execute `docker exec -it rss-service npm run migration:run`.
 
 ## Logging & error handling
 Keep in mind, a logger is encapsulated into a separate module `logger.ts` and injected into the fastify instance in `app.ts`. To track logs, it uses abstract logger interface of the fastify instance, e.g. `app.log.info(msg)` and so on. So we can replace the injected logger instance easily without need to change logging logic.
