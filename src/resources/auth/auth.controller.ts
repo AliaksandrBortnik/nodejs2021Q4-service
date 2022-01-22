@@ -25,7 +25,7 @@ export class AuthController {
 
   async login(): Promise<void> {
     const { login, password } = this.req.body;
-    const userId: string | undefined = await this.authService.checkUser(login, password);
+    const userId: string | null = await this.authService.checkUser(login, password);
 
     if (!userId) {
       this.res.status(StatusCodes.FORBIDDEN).send();

@@ -11,7 +11,7 @@ export class AuthService {
     this.userRepo = getCustomRepository(UserRepository);
   }
 
-  async checkUser(login: string, password: string): Promise<string | undefined> {
-    return this.userRepo.isValidUser(login, password);
+  async checkUser(login: string, password: string): Promise<string | null> {
+    return this.userRepo.authenticate(login, password);
   }
 }
