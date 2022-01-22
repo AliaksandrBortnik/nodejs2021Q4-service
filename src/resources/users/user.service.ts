@@ -40,7 +40,7 @@ export class UserService {
    * @returns Returns promise of a new user
    */
   async addOrUpdate(user: User): Promise<User> {
-    user.password = bcryptjs.hashSync(user.password, config.AUTH_SALT_ROUNDS);
+    user.password = bcryptjs.hashSync(user.password, Number(config.AUTH_SALT_ROUNDS));
     return this.userRepo.save(user);
   }
 

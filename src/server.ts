@@ -30,6 +30,20 @@ app.setErrorHandler(async (error: FastifyError, request: FastifyRequest, reply: 
   reply.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
 });
 
+app.addHook('preValidation', async (request, reply) => {
+  if (!['/login', '/doc', '/docs', '/'].includes(request.url)) {
+    if (request.headers['authorization']) {
+      try {
+        await request.jwtVerify()
+      } catch (err) {
+        reply.status(StatusCodes.UNAUTHORIZED).send(err);
+      }
+    } else {
+      reply.status(StatusCodes.UNAUTHORIZED).send();
+    }
+  }
+});
+
 /*
  * The body cannot be serialized inside a req method because the request is serialized when Fastify creates the child logger.
  * At that time, the body is not yet parsed. Hence, need to use hook.

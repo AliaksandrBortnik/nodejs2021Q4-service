@@ -10,7 +10,7 @@
   "scripts": {
     "docker:start": "docker compose up --build",
     "docker:stop": "docker compose down",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -n initial -p",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -p --name ",
     "migration:run": "ts-node ./node_modules/typeorm/cli migration:run",
     "start": "nodemon src/server.ts --legacy-watch --exitcrash",
     "build": "tsc --project tsconfig.json",
