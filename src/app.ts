@@ -7,14 +7,22 @@ import {
   FastifyPluginOptions,
   FastifyRegisterOptions
 } from 'fastify';
+import {fastifyJwt} from 'fastify-jwt';
 import {userRouter} from './resources/users/user.router';
 import {boardRouter} from './resources/boards/board.router';
 import {taskRouter} from './resources/tasks/task.router';
 import {logger} from "./logger";
 import "reflect-metadata";
+import {config} from "./common/config";
+import {authRouter} from "./resources/auth/auth.router";
 
 const app: FastifyInstance = fastify({ logger });
 
+app.register(fastifyJwt, {
+  secret: config.JWT_SECRET_KEY!
+});
+
+app.register(authRouter);
 app.register(userRouter);
 app.register(boardRouter);
 app.register(taskRouter);
