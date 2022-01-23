@@ -11,12 +11,12 @@ export const authValidator: FastifyPluginAsync =
     });
 
     app.addHook('preValidation', async (request: FastifyRequest, reply: FastifyReply) => {
-      if (!['/login', '/doc', '/docs', '/'].includes(request.url)) {
+      if (!['/login', '/'].includes(request.url) && !request.url.startsWith('/doc')) {
         if (request.headers['authorization']) {
           try {
             await request.jwtVerify()
           } catch (err) {
-            reply.status(StatusCodes.UNAUTHORIZED).send(err);
+            reply.status(StatusCodes.UNAUTHORIZED).send();
           }
         } else {
           reply.status(StatusCodes.UNAUTHORIZED).send();
