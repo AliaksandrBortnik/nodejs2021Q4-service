@@ -1,0 +1,40 @@
+version: '3.5'
+
+networks:
+  rss-main-net:
+    driver: bridge
+    name: rss-main-net
+volumes:
+  logs:
+  db:
+services:
+  node:
+    networks:
+      - rss-main-net
+    build: .
+    image: rss-service
+    container_name: rss-service
+    restart: always
+    volumes:
+      - ./src:/app/src
+      - logs:/app/logs
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+    environment:
+      - PORT=${PORT}
+  postgres:
+    networks:
+      - rss-main-net
+    build: ./database/
+    image: rss-db
+    container_name: rss-db
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}

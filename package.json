@@ -1,5 +1,5 @@
 {
-  "name": "REST Fastify API",
+  "name": "restfastify",
   "version": "1.0.0",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "scripts": {
     "doc": "typedoc",
     "build": "tsc --project tsconfig.json",
-    "start": "nodemon src/server.ts",
+    "start": "nodemon src/server.ts --legacy-watch --exitcrash",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
@@ -66,7 +66,6 @@
     "lint-staged": "12.0.3",
     "nodemon": "2.0.15",
     "pino-pretty": "^7.3.0",
-    "prettier": "2.4.1",
     "supertest": "6.1.6",
     "ts-node": "^10.4.0",
     "typedoc": "^0.22.10",
