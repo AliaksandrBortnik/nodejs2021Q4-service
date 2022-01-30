@@ -1,15 +1,22 @@
 import app from './app';
-import config from './common/config';
+import {config} from './common/config';
 import {FastifyError, FastifyReply, FastifyRequest} from "fastify";
 import {StatusCodes} from "http-status-codes";
+import {createConnection} from "typeorm";
 
 const PORT: string = config.PORT || '4000';
 
-app.listen(PORT, '0.0.0.0').catch((error: unknown) => {
-  if (error instanceof Error) {
-    app.log.fatal(error.message);
-    process.exit(1);
-  }
+async function init() {
+  await createConnection();
+}
+
+init().then(() => {
+  app.listen(PORT, '0.0.0.0').catch((error: unknown) => {
+    if (error instanceof Error) {
+      app.log.fatal(error.message);
+      process.exit(1);
+    }
+  });
 });
 
 app.setErrorHandler(async (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
@@ -19,7 +26,7 @@ app.setErrorHandler(async (error: FastifyError, request: FastifyRequest, reply: 
     return;
   }
 
-  app.log.error(error.message);
+  app.log.error('setErrorHandler' + error.message);
   reply.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error.message);
 });
 
@@ -34,11 +41,11 @@ app.addHook('preHandler', async (req: FastifyRequest) => {
 })
 
 process.on('uncaughtException', (error: Error) => {
-  app.log.fatal(error.message);
+  app.log.fatal('uncaughtException' + error.message);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (error: Error) => {
-  app.log.fatal(error.message);
+  app.log.fatal('unhandledRejection' + error.message);
   process.exit(1);
 });

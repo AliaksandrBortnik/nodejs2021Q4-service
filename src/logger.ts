@@ -1,6 +1,6 @@
 import {LoggerOptions, Logger, TransportMultiOptions, pino} from 'pino';
 import {FastifyReply, FastifyRequest} from "fastify";
-import config from "./common/config";
+import {config} from "./common/config";
 
 const transport = <TransportMultiOptions>{
   targets: [

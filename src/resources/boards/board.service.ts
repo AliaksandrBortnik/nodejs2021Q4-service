@@ -1,19 +1,20 @@
 import {BoardRepository} from './board.repository';
-import { Board } from "./board.model";
+import { Board } from "../../entity/board.model";
 import {TaskService} from "../tasks/task.service";
+import {getCustomRepository, getRepository, Repository} from "typeorm";
+import {BoardColumn} from "../../entity/board-column.model";
 
 /**
  * Board's business logic and work with Data Access Layer
  */
 export class BoardService {
   boardRepo: BoardRepository;
+  columnRepo: Repository<BoardColumn>;
   taskService: TaskService;
 
-  /**
-   * Constructor of BoardService class
-   */
   constructor() {
-    this.boardRepo = new BoardRepository();
+    this.boardRepo = getCustomRepository(BoardRepository);
+    this.columnRepo = getRepository(BoardColumn);
     this.taskService = new TaskService();
   }
 
@@ -22,7 +23,13 @@ export class BoardService {
    * @returns Returns promise of all existing boards
    */
   async getAll(): Promise<Board[]> {
-    return this.boardRepo.getAll();
+    // There is a lack of vital feature using eager loading: https://github.com/typeorm/typeorm/issues/2620
+    // return this.boardRepo.find();
+    return this.boardRepo
+      .createQueryBuilder("board")
+      .leftJoinAndSelect("board.columns", "columns")
+      .orderBy({ "columns.order": "ASC" })
+      .getMany();
   }
 
   /**
@@ -31,26 +38,23 @@ export class BoardService {
    * @returns Returns promise of a board if found or undefined
    */
   async getById(id: string): Promise<Board | undefined> {
-    return this.boardRepo.getById(id);
+    // There is a lack of vital feature using eager loading: https://github.com/typeorm/typeorm/issues/2620
+    // return this.boardRepo.findOne(id);
+    return this.boardRepo
+      .createQueryBuilder("board")
+      .where("board.id = :id", { id })
+      .leftJoinAndSelect("board.columns", "columns")
+      .orderBy({ "columns.order": "ASC" })
+      .getOne();
   }
 
   /**
-   * Add a new board
+   * Add or update a board
    * @param board - Board payload
    * @returns Returns promise of a new board
    */
-  async add(board: Board): Promise<Board> {
-    return this.boardRepo.add(board);
-  }
-
-  /**
-   * Update the board
-   * @param id - Board's id
-   * @param board - Board's payload
-   * @returns Returns promise of updated board
-   */
-  async update(id: string, board: Board): Promise<Board> {
-    return this.boardRepo.update(id, board);
+  async addOrUpdate(board: Board): Promise<Board> {
+    return this.boardRepo.save(board);
   }
 
   /**
@@ -58,7 +62,6 @@ export class BoardService {
    * @param id - Board's id
    */
   async remove(id: string): Promise<void> {
-    await this.taskService.eraseAllTasksOfBoard(id);
-    await this.boardRepo.remove(id);
+    await this.boardRepo.delete(id);
   }
 }

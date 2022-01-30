@@ -1,5 +1,5 @@
 import {FastifyRequest} from "fastify";
-import {Board} from "./board.model";
+import {Board} from "../../entity/board.model";
 
 export type BoardFastifyRequest = FastifyRequest<{
   Params: {

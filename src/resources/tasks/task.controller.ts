@@ -1,6 +1,6 @@
 import {TaskService} from './task.service';
 import {FastifyReply} from 'fastify';
-import { Task } from "./task.model";
+import { Task } from "../../entity/task.model";
 import {TaskFastifyRequest} from "./task.request";
 import {StatusCodes} from "http-status-codes";
 
@@ -59,7 +59,8 @@ export class TaskController {
       return;
     }
 
-    const task: Task | undefined = await this.taskService.add({ ...this.req.body, boardId });
+    // TODO: make sure boardId is added from params
+    const task: Task | undefined = await this.taskService.addOrUpdate({ ...this.req.body, boardId });
     this.res.status(StatusCodes.CREATED).send(task);
   }
 
@@ -83,7 +84,7 @@ export class TaskController {
       return;
     }
 
-    const task: Task = await this.taskService.update(taskId, this.req.body);
+    const task = await this.taskService.addOrUpdate(this.req.body);
     this.res.code(StatusCodes.OK).send(task);
   }
 
