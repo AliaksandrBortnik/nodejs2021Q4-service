@@ -12,13 +12,16 @@ import {boardRouter} from './resources/boards/board.router';
 import {taskRouter} from './resources/tasks/task.router';
 import {logger} from "./logger";
 import "reflect-metadata";
+import {authRouter} from "./resources/auth/auth.router";
+import {authValidator} from "./auth.plugin";
 
 const app: FastifyInstance = fastify({ logger });
 
+app.register(authValidator);
+app.register(authRouter);
 app.register(userRouter);
 app.register(boardRouter);
 app.register(taskRouter);
-
 app.register(fastifySwagger as FastifyPluginCallback, <FastifyRegisterOptions<FastifyPluginOptions>>{
   exposeRoute: true,
   routePrefix: '/doc',
