@@ -5,20 +5,20 @@ import {TaskEntity} from "../../task/entities/task.entity";
 @Entity('column')
 export class BoardColumnEntity {
   @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  id: string;
 
   @Column()
-  title!: string;
+  title: string;
 
   @Column()
-  order!: number;
+  order: number;
 
   @Column({ nullable: true })
   boardId?: string;
   @ManyToOne(() => BoardEntity, board => board.columns, { onDelete: "CASCADE" })
   @JoinColumn({ name: 'boardId' })
-  board!: BoardEntity;
+  board: BoardEntity;
 
   @OneToMany(() => TaskEntity, task => task.column)
-  tasks!: TaskEntity[];
+  tasks: TaskEntity[];
 }

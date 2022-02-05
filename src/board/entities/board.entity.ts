@@ -5,14 +5,14 @@ import {TaskEntity} from "../../task/entities/task.entity";
 @Entity('board')
 export class BoardEntity {
   @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  id: string;
 
   @Column()
-  title!: string;
+  title: string;
 
   @OneToMany(() => BoardColumnEntity, column => column.board, { cascade: true })
-  columns!: BoardColumnEntity[];
+  columns: BoardColumnEntity[];
 
   @OneToMany(() => TaskEntity, task => task.board)
-  tasks!: TaskEntity[];
+  tasks: TaskEntity[];
 }

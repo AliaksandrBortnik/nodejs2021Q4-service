@@ -2,6 +2,8 @@ import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, R
 import {Response} from 'express';
 import {BoardService} from "./board.service";
 import {BoardEntity} from "./entities/board.entity";
+import {BoardDto} from "./dto/board.dto";
+import {CreateBoardDto} from "./dto/create-board.dto";
 
 @Controller('boards')
 export class BoardController {
@@ -13,51 +15,45 @@ export class BoardController {
    * Get all boards and send boards as a response with 200 status.
    */
   @Get()
-  async getAll(): Promise<BoardEntity[]> {
-    const boards: BoardEntity[] = await this.boardService.getAll();
-    return boards;
+  async getAll(): Promise<BoardDto[]> {
+    return this.boardService.getAll();
   }
 
   /**
    * Get a board by ID and send the board as a response with 200 status if found.
    * Otherwise, send 404 response
    */
-  // TODO: validate id - uuid
   @Get(':id')
   async getById(
     @Param('id') boardId: string,
-    @Res({ passthrough: true }) res: Response
-  ): Promise<BoardEntity | undefined> {
-    const board: BoardEntity | undefined = await this.boardService.getById(boardId);
+    @Res() res: Response
+  ): Promise<BoardDto | undefined> {
+    const board: BoardDto | undefined = await this.boardService.getById(boardId);
 
     if (!board) {
       res.status(HttpStatus.NOT_FOUND).send({ message: 'Not Found' });
       return;
     }
 
-    return board;
+    res.status(HttpStatus.OK).send(board);
   }
 
   /**
    * Add a board and send the created board as a response with 201 status.
    */
-  // TODO: all fields required (title, columns) except id
   @Post()
-  async add(@Body() boardEntity: BoardEntity): Promise<BoardEntity> {
-    const board: BoardEntity = await this.boardService.addOrUpdate(boardEntity);
-    return board;
+  async add(@Body() boardDto: CreateBoardDto): Promise<BoardDto> {
+    return this.boardService.addOrUpdate(boardDto);
   }
 
   /**
    * Update a board and send the updated board as a response with 200 status if found.
    * Otherwise, send 404 response.
    */
-  // TODO: all fields required (title, columns)
-  // TODO: id is uuid
   @Put(':id')
   async update(
     @Param('id') boardId: string,
-    @Body() boardEntity: BoardEntity,
+    @Body() boardDto: BoardDto,
     @Res() res: Response
   ): Promise<BoardEntity | undefined> {
     const boardExists = !!(await this.boardService.getById(boardId));
@@ -67,12 +63,12 @@ export class BoardController {
       return;
     }
 
-    if (boardId !== boardEntity.id && boardEntity.id !== null) {
+    if (boardId !== boardDto.id && boardDto.id !== null) {
       res.status(HttpStatus.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
       return;
     }
 
-    const board: BoardEntity = await this.boardService.addOrUpdate(boardEntity);
+    const board: BoardDto = await this.boardService.addOrUpdate(boardDto);
     res.status(HttpStatus.OK).send(board);
   }
 
@@ -80,7 +76,6 @@ export class BoardController {
    * Remove a board and send a response with 204 status if found.
    * Otherwise, send 404 response.
    */
-  // TODO: id is uuid
   @Delete(':id')
   @HttpCode(204)
   async remove(
