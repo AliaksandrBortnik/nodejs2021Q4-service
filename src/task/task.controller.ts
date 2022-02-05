@@ -1,7 +1,8 @@
 import {Response} from 'express'
 import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Res} from "@nestjs/common";
-import {TaskEntity} from "./entities/task.entity";
 import {TaskService} from "./task.service";
+import {TaskDto} from "./dto/task.dto";
+import {CreateTaskDto} from "./dto/create-task.dto";
 
 @Controller('boards/:boardId/tasks')
 export class TaskController {
@@ -13,9 +14,8 @@ export class TaskController {
    * Get all tasks of the board and send tasks as a response with 200 status.
    */
   @Get()
-  async getAllByBoardId(@Param('boardId') boardId: string): Promise<TaskEntity[]> {
-    const tasks: TaskEntity[] = await this.taskService.getAllByBoardId(boardId);
-    return tasks;
+  async getAllByBoardId(@Param('boardId') boardId: string): Promise<TaskDto[]> {
+    return this.taskService.getAllByBoardId(boardId);
   }
 
   /**
@@ -28,7 +28,7 @@ export class TaskController {
     @Param('taskId') taskId: string,
     @Res() res: Response
   ): Promise<void> {
-    const task: TaskEntity | undefined = await this.taskService.getById(taskId);
+    const task: TaskDto | undefined = await this.taskService.getById(taskId);
 
     if (!task) {
       res.status(HttpStatus.NOT_FOUND).send();
@@ -44,15 +44,16 @@ export class TaskController {
   @Post()
   async add(
     @Param('boardId') boardId: string,
-    @Body() taskEntity: TaskEntity,
+    @Body() taskDto: CreateTaskDto,
     @Res() res: Response
   ): Promise<void> {
-    if (boardId !== taskEntity.boardId && taskEntity.boardId !== null) {
+    if (boardId !== taskDto.boardId && taskDto.boardId !== null) {
       res.status(HttpStatus.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
       return;
     }
 
-    const task: TaskEntity | undefined = await this.taskService.addOrUpdate({ ...taskEntity, boardId });
+    // Keep boardId overriding from params due to current existing POST test where no boardId in body
+    const task = await this.taskService.addOrUpdate({ ...taskDto, boardId });
     res.status(HttpStatus.CREATED).send(task);
   }
 
@@ -64,10 +65,10 @@ export class TaskController {
   async update(
     @Param('boardId') boardId: string,
     @Param('taskId') taskId: string,
-    @Body() taskEntity: TaskEntity,
+    @Body() taskDto: TaskDto,
     @Res() res: Response
   ): Promise<void> {
-    if (boardId !== taskEntity.boardId && taskEntity.boardId !== null) {
+    if (boardId !== taskDto.boardId && taskDto.boardId !== null) {
       res.status(HttpStatus.BAD_REQUEST).send({ message: 'Mismatch of boardId' });
       return;
     }
@@ -79,7 +80,7 @@ export class TaskController {
       return;
     }
 
-    const task = await this.taskService.addOrUpdate(taskEntity);
+    const task = await this.taskService.addOrUpdate(taskDto);
     res.status(HttpStatus.OK).send(task);
   }
 
