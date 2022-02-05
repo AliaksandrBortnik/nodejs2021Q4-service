@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsUUID} from "class-validator";
+import {IsNotEmpty, IsString, IsUUID} from "class-validator";
 
 export class UpdateUserDto {
   @IsNotEmpty()
@@ -6,11 +6,14 @@ export class UpdateUserDto {
   id: string;
 
   @IsNotEmpty()
+  @IsString()
   name: string;
 
   @IsNotEmpty()
+  @IsString()
   login: string;
 
   @IsNotEmpty()
+  @IsString()
   password: string;
 }
