@@ -3,6 +3,7 @@ import {Body, Controller, HttpCode, HttpStatus, Post, Res} from "@nestjs/common"
 import {Response} from 'express';
 import {UserService} from "../user/user.service";
 import {Public} from "./public.decorator";
+import {AuthDto} from "./auth.dto";
 
 /**
  * Class to handle all Auth's requests
@@ -18,7 +19,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(200)
   async login(
-    @Body() credentials: { login: string, password: string }, // TODO: login and password - required
+    @Body() credentials: AuthDto,
     @Res() res: Response
   ): Promise<void> {
     const { login, password } = credentials;
