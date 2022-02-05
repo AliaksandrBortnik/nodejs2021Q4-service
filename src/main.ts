@@ -26,8 +26,8 @@ async function bootstrap() {
   // app.useGlobalFilters(new HttpExceptionFilter());
   // app.useLogger(app.get(CustomLogger));
 
-  await app.listen(PORT, '0.0.0.0'); // TODO: review. is it fine for express 0.0.0.0?
-  // TODO: log errors on listen
+  await app.listen(PORT, '0.0.0.0');
+
   // app.listen(PORT, '0.0.0.0').catch((error: unknown) => {
   //   if (error instanceof Error) {
   //     app.log.fatal(error.message);
