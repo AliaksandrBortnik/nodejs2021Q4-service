@@ -19,8 +19,7 @@ import {AllExceptionsFilter} from "./all-exception.filter";
   ],
   controllers: [AppController],
   providers: [
-    // TODO: return back. it hides validation message in response
-    // { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
     AppService
   ],
 })
