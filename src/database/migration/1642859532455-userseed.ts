@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 import bcryptjs from "bcryptjs";
-import {config} from "../common/config";
+import {config} from "../../common/config";
 
 export class userseed1642859532455 implements MigrationInterface {
     name = 'userseed1642859532455'

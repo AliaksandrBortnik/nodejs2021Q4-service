@@ -1,23 +1,20 @@
-import { TaskRepository } from "./task.repository";
-import { Task } from "../../entity/task.model";
-import {getCustomRepository} from "typeorm";
+import {Inject, Injectable} from "@nestjs/common";
+import {TaskRepository} from "./task.repository";
+import {TaskEntity} from "./entities/task.entity";
 
-/**
- * Task's business logic and work with Data Access Layer
- */
+@Injectable()
 export class TaskService {
-  taskRepo: TaskRepository;
-
-  constructor() {
-    this.taskRepo = getCustomRepository(TaskRepository);
-  }
+  constructor(
+    @Inject('TASK_REPOSITORY')
+    private readonly taskRepo: TaskRepository
+  ) {}
 
   /**
    * Get all tasks of the board
    * @param boardId - Board id
    * @returns Returns promise of all existing tasks of the board
    */
-  async getAllByBoardId(boardId: string): Promise<Task[]> {
+  async getAllByBoardId(boardId: string): Promise<TaskEntity[]> {
     return this.taskRepo.getAllByBoardId(boardId);
   }
 
@@ -26,7 +23,7 @@ export class TaskService {
    * @param id - Task's id
    * @returns Returns promise of a task if found or undefined
    */
-  async getById(id: string): Promise<Task | undefined> {
+  async getById(id: string): Promise<TaskEntity | undefined> {
     return this.taskRepo.findOne(id);
   }
 
@@ -35,7 +32,7 @@ export class TaskService {
    * @param task - Task payload
    * @returns Returns promise of a new task
    */
-  async addOrUpdate(task: Task): Promise<Task> {
+  async addOrUpdate(task: TaskEntity): Promise<TaskEntity> {
     return this.taskRepo.save(task);
   }
 

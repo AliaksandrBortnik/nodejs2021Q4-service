@@ -1,28 +1,24 @@
-import {BoardRepository} from './board.repository';
-import { Board } from "../../entity/board.model";
-import {TaskService} from "../tasks/task.service";
-import {getCustomRepository, getRepository, Repository} from "typeorm";
-import {BoardColumn} from "../../entity/board-column.model";
+import {Inject, Injectable} from "@nestjs/common";
+import {BoardRepository} from "./board.repository";
+import {TaskService} from "../task/task.service";
+import {Repository} from "typeorm";
+import {BoardEntity} from "./entities/board.entity";
 
-/**
- * Board's business logic and work with Data Access Layer
- */
+@Injectable()
 export class BoardService {
-  boardRepo: BoardRepository;
-  columnRepo: Repository<BoardColumn>;
-  taskService: TaskService;
-
-  constructor() {
-    this.boardRepo = getCustomRepository(BoardRepository);
-    this.columnRepo = getRepository(BoardColumn);
-    this.taskService = new TaskService();
-  }
+  constructor(
+    private readonly taskService: TaskService,
+    @Inject('BOARD_REPOSITORY')
+    private readonly boardRepo: BoardRepository,
+    @Inject('COLUMN_REPOSITORY')
+    private readonly columnRepo: Repository<BoardEntity>
+  ) {}
 
   /**
    * Get all boards
    * @returns Returns promise of all existing boards
    */
-  async getAll(): Promise<Board[]> {
+  async getAll(): Promise<BoardEntity[]> {
     // There is a lack of vital feature using eager loading: https://github.com/typeorm/typeorm/issues/2620
     // return this.boardRepo.find();
     return this.boardRepo
@@ -37,7 +33,7 @@ export class BoardService {
    * @param id - Board's id
    * @returns Returns promise of a board if found or undefined
    */
-  async getById(id: string): Promise<Board | undefined> {
+  async getById(id: string): Promise<BoardEntity | undefined> {
     // There is a lack of vital feature using eager loading: https://github.com/typeorm/typeorm/issues/2620
     // return this.boardRepo.findOne(id);
     return this.boardRepo
@@ -53,7 +49,7 @@ export class BoardService {
    * @param board - Board payload
    * @returns Returns promise of a new board
    */
-  async addOrUpdate(board: Board): Promise<Board> {
+  async addOrUpdate(board: BoardEntity): Promise<BoardEntity> {
     return this.boardRepo.save(board);
   }
 

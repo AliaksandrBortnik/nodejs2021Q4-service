@@ -13,6 +13,6 @@
     "esModuleInterop" : true, // Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility.
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-//    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false
   }
 }
