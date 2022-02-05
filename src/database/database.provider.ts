@@ -1,6 +1,6 @@
-import { createConnection } from 'typeorm';
+import {Connection, createConnection} from 'typeorm';
 
 export const databaseProvider = {
   provide: 'DATABASE_CONNECTION',
-  useFactory: async () => await createConnection()
+  useFactory: async (): Promise<Connection> => await createConnection()
 };

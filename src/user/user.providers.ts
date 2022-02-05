@@ -5,7 +5,8 @@ import {UserService} from "./user.service";
 export const userProviders = [
   {
     provide: 'USER_REPOSITORY',
-    useFactory: (connection: Connection) => connection.getCustomRepository(UserRepository),
+    useFactory: (connection: Connection): UserRepository =>
+      connection.getCustomRepository(UserRepository),
     inject: ['DATABASE_CONNECTION']
   },
   UserService
