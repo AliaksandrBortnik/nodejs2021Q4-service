@@ -12,7 +12,7 @@ import {JwtStrategy} from "./jwt.strategy";
     UserModule,
     JwtModule.register(({
       secret: config.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '1h' }
+      signOptions: { expiresIn: '12h' }
     }))
   ],
   controllers: [AuthController],
