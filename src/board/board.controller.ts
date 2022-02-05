@@ -73,7 +73,7 @@ export class BoardController {
     }
 
     const board: BoardEntity = await this.boardService.addOrUpdate(boardEntity);
-    return board;
+    res.status(HttpStatus.OK).send(board);
   }
 
   /**
