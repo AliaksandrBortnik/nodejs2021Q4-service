@@ -4,6 +4,7 @@ import {config} from "./common/config";
 import {FastifyAdapter, NestFastifyApplication} from "@nestjs/platform-fastify";
 import {logger} from "./logger";
 import "reflect-metadata";
+import {ValidationPipe} from "@nestjs/common";
 // import {Logger} from "nestjs-pino";
 
 const PORT: string = config.PORT || '4000';
@@ -18,12 +19,11 @@ async function bootstrap() {
     await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), appOptions) :
     await NestFactory.create(AppModule, appOptions);
 
+  // Auto-validation according to DTO validation decorators
+  app.useGlobalPipes(new ValidationPipe());
+
   // app.useLogger(app.get(Logger));
-
-  // app.useGlobalPipes(new ValidationPipe());
-
   // app.useGlobalFilters(new HttpExceptionFilter());
-
   // app.useLogger(app.get(CustomLogger));
 
   await app.listen(PORT, '0.0.0.0'); // TODO: review. is it fine for express 0.0.0.0?
