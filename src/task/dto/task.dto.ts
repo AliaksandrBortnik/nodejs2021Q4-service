@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID} from "class-validator";
+import {IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID} from "class-validator";
 
 export class TaskDto {
   @IsNotEmpty()
@@ -10,7 +10,7 @@ export class TaskDto {
   title: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
   order: number;
 
   @IsNotEmpty()

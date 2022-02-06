@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumber, IsString, IsUUID} from "class-validator";
+import {IsInt, IsNotEmpty, IsString, IsUUID} from "class-validator";
 
 export class BoardColumnDto {
   @IsNotEmpty()
@@ -10,7 +10,7 @@ export class BoardColumnDto {
   title: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
   order: number;
 
   @IsNotEmpty()
