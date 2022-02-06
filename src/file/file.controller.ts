@@ -16,8 +16,8 @@ export class FileController {
   @Get(':fileName')
   getFile(
     @Param('fileName') fileName: string,
-    @Res({ passthrough: true }) res: Response
-  ): StreamableFile | undefined {
+    @Res() res: Response
+  ) {
     const filePath = `files/${fileName}`;
 
     try {
@@ -30,10 +30,6 @@ export class FileController {
     }
 
     const file = createReadStream(`files/${fileName}`);
-    res.set({
-      'Content-Type': 'image/*',
-      'Content-Disposition': `attachment; filename="${fileName}"`
-    })
-    return new StreamableFile(file);
+    file.pipe(res);
   }
 }
