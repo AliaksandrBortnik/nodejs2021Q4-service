@@ -6,7 +6,7 @@ import { Logger } from "nestjs-pino";
 export class RequestBodyInterceptor implements NestInterceptor {
   constructor(private readonly logger: Logger) {}
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const body = context.switchToHttp().getRequest().body;
     body && this.logger.log('Tracking request body', body);
     return next.handle();
