@@ -11,6 +11,7 @@ import {config} from "./common/config";
 import {pino} from "pino";
 import LevelWithSilent = pino.LevelWithSilent;
 import {FastifyReply, FastifyRequest} from "fastify";
+import {FileModule} from "./file/file.module";
 import {RequestBodyInterceptor} from "./request-body.interceptor";
 
 @Module({
@@ -54,6 +55,7 @@ import {RequestBodyInterceptor} from "./request-body.interceptor";
         },
       }
     }),
+    FileModule,
     DatabaseModule,
     UserModule,
     AuthModule,
