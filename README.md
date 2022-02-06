@@ -5,7 +5,8 @@
 2. To start the apps in docker, use `npm run docker:start`.
 3. If you want to run unit tests, open another terminal where `npm run test:auth`.
 4. To check lint, use `npm run lint`.
-5. To generate documentation, use `npm run doc`. Then open `docs` folder in the project, where you can find the result and open `index.html` in your browser.
+
+Don't run migration manually. Database migrations will be applied automatically inside docker when it is being started.
 
 ## Docker
 Current main image is 291MB.
