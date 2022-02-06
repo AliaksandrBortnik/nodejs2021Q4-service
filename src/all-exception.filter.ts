@@ -6,10 +6,14 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
+import {Logger} from "nestjs-pino";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+  constructor(
+    private readonly httpAdapterHost: HttpAdapterHost,
+    private readonly logger: Logger
+  ) {}
 
   async catch(exception: unknown, host: ArgumentsHost): Promise<void> {
     // In certain situations `httpAdapter` might not be available in the
@@ -30,6 +34,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         reason: 'Something went wrong'
       };
 
+    this.logger.error('Error', responseBody);
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
   }
 }
