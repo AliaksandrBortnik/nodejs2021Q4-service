@@ -3,7 +3,7 @@ import {
   Get,
   HttpStatus,
   Param,
-  Res, StreamableFile
+  Res
 } from "@nestjs/common";
 import {Public} from "../auth/public.decorator";
 import {Response} from 'express';
