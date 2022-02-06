@@ -92,7 +92,7 @@ export class TaskController {
   @HttpCode(204)
   async remove(
     @Param('taskId') taskId: string,
-    @Res() res: Response
+    @Res({ passthrough: true }) res: Response
   ): Promise<void> {
     const taskExists = !!(await this.taskService.getById(taskId));
 

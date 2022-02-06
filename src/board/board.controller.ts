@@ -80,7 +80,7 @@ export class BoardController {
   @HttpCode(204)
   async remove(
     @Param('id') boardId: string,
-    @Res() res: Response
+    @Res({ passthrough: true }) res: Response
   ): Promise<void> {
     const boardExists = !!(await this.boardService.getById(boardId));
 
