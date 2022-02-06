@@ -5,6 +5,7 @@ import {FastifyAdapter, NestFastifyApplication} from "@nestjs/platform-fastify";
 import "reflect-metadata";
 import {ValidationPipe} from "@nestjs/common";
 import {Logger} from "nestjs-pino";
+import {NestExpressApplication} from "@nestjs/platform-express";
 
 const PORT: string = config.PORT || '4000';
 
@@ -14,7 +15,7 @@ async function bootstrap() {
   // https://docs.nestjs.com/techniques/performance
   const app = config.USE_FASTIFY ?
     await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), appOptions) :
-    await NestFactory.create(AppModule, appOptions);
+    await NestFactory.create<NestExpressApplication>(AppModule, appOptions);
 
   // Override default logger with nestjs-pino logger
   app.useLogger(app.get(Logger));
