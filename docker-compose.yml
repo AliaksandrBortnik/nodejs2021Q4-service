@@ -17,6 +17,7 @@ services:
     restart: always
     volumes:
       - ./src:/app/src
+      - ./files:/app/files
       - logs:/app/logs
     ports:
       - ${PORT}:${PORT}
