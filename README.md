@@ -5,7 +5,8 @@
 2. To start the apps in docker, use `npm run docker:start`.
 3. If you want to run unit tests, open another terminal where `npm run test:auth`.
 4. To check lint, use `npm run lint`.
-5. To generate documentation, use `npm run doc`. Then open `docs` folder in the project, where you can find the result and open `index.html` in your browser.
+
+Don't run migration manually. Database migrations will be applied automatically inside docker when it is being started.
 
 ## Docker
 Current main image is 291MB.
@@ -25,9 +26,7 @@ Keep in mind, migrations are applied automatically on application start-up. See 
 TS documentation is available in `/docs/index.html`.
 
 ## Logging & error handling
-Keep in mind, a logger is encapsulated into a separate module `logger.ts` and injected into the fastify instance in `app.ts`. To track logs, it uses abstract logger interface of the fastify instance, e.g. `app.log.info(msg)` and so on. So we can replace the injected logger instance easily without need to change logging logic.
-
-Log is available in `/logs/all.txt`, `/logs/error.txt` and also `console`.
+Logs are available in docker volume `logs` and also `console`.
 To change logging level, go to `.env` and replace the value of `LOG_LEVEL`.
 
 You can use one of:
